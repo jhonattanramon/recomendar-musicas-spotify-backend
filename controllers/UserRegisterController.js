@@ -28,7 +28,7 @@ const UserController = {
   getAll: async (req, res) => {
     try {
       const users = await RegisterModel.find();
-      res.json({users: users});
+      res.json(users);
     } catch (err) {
       console.log(err);
     }
