@@ -10,4 +10,5 @@ router.route('/playlistsEmDestaque').get((req, res) => spotifyController.playlis
 router.route('/obtervariosartistas').get( ( req, res) => spotifyController.obterVariosArtistas( req , res) )
 router.route('/obtergeneros').get( ( req, res) => spotifyController.obterGeneros(req, res))
 router.route('/tracksplaylist').get( ( req, res) => spotifyController.tracksPlaylist(req, res))
+router.route('/authConfirmado').get( ( req, res) => spotifyController.authConfirmado(req, res))
 module.exports = router;

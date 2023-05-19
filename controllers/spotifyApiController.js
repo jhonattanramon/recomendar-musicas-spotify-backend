@@ -6,6 +6,8 @@ var $ = require("jquery");
 require("dotenv/config");
 const { Requests, tokenTst } = require("../api/AcessToken");
 const { ok } = require("assert");
+const { channel } = require("diagnostics_channel");
+const express = require("express");
 
 
 const classReq = new Requests()
@@ -110,6 +112,15 @@ const spotifyController = {
     }catch(err){
       console.log("tracks err");
     }
+  },
+  authConfirmado: async ( req, res ) => {
+    try{
+
+
+    }catch(err){
+      res.status(403).json(err)
+    }
+
   }
 };
 
