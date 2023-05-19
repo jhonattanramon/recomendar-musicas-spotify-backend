@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "servidor.js",
+  "engines": {
+    "node":"18"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server.auth": "nodemon ./api/spotify/auth.js",
-    "server": "nodemon ./servidor.js"
+    "server": "nodemon ./servidor.js",
+    "build": "up src",
+    "start":"node servidor.js",
+    "startAuth": "node ./api/spotify/auth.js"
   },
   "author": "",
   "license": "ISC",
