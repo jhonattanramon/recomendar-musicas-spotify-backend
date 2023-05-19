@@ -12,7 +12,7 @@
     "server": "nodemon ./servidor.js",
     "build": "up src",
     "start":"node servidor.js",
-    "startAuth": "node ./api/spotify/auth.js"
+    "startAuth": "node api/spotify/auth.js"
   },
   "author": "",
   "license": "ISC",
