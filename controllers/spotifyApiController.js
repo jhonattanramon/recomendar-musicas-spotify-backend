@@ -108,6 +108,7 @@ const spotifyController = {
     try{
       console.log(req.headers.hreftracks);
      const tracks =  await classReq.tracksPlaylist(req.headers.hreftracks)
+     console.log(tracks);
       res.status(200).json(tracks)
     }catch(err){
       console.log("tracks err");

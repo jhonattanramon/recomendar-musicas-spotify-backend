@@ -92,12 +92,15 @@ class Requests {
 
   async tracksPlaylist(url){
     try{
-        const result = await axios.get(url, {
+        console.log(url);
+        console.log(tokenG);
+        const result = await axios.get(`${url}`, {
           headers:{
             Authorization: `Bearer ${tokenG}`,
           }
         }).then( res => res.data)
 
+        console.log("result", result);
         
         return result
     }catch(err){

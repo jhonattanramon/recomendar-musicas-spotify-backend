@@ -24,13 +24,13 @@ const LoginController = {
           res.json({ access : access})
 
       }else{
-      res.status(404).json({ status: "usario não encontrado"})
+      res.status(404).json({ status:404})
         console.log("nenhum usuario encontrado");
       }
       //console.log(req.body);
 
     }catch( err){
-      console.log(err);
+        res.status(500).json({msg: "não encontrado", err})
     }
   }
 
