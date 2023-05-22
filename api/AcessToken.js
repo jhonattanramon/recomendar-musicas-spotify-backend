@@ -22,7 +22,6 @@ class Requests {
 
   async playlist() {
     try {
-      console.log(tokenG);
       const result = await axios
         .get(`${urlBaseSpotify}/playlists/37i9dQZF1DX0FOF1IUWK1W`, {
           headers: {
@@ -61,7 +60,6 @@ class Requests {
 
   async obterGeneros() {
     try {
-      console.log("try generos");
       const result = await axios
         .get(`${urlBaseSpotify}/recommendations/available-genre-seeds`, {
           headers: {
@@ -69,7 +67,6 @@ class Requests {
           },
         })
         .then((res) => res.data);
-      console.log(result);
     } catch (err) {
       console.log("obterGeneros");
     }
@@ -77,7 +74,6 @@ class Requests {
 
   async playlistsEmDestaque() {
     try {
-      console.log(tokenG);
       const result = await axios
         .get(`${urlBaseSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`, 
         {
@@ -94,8 +90,7 @@ class Requests {
 
   async tracksPlaylist(url){
     try{
-        console.log(url);
-        console.log(tokenG);
+     
         const result = await axios.get(`${url}`, {
           headers:{
             Authorization: `Bearer ${tokenG}`,
@@ -106,7 +101,26 @@ class Requests {
         
         return result
     }catch(err){
-      console.log("tracks");
+      console.log("tracks trackPlaylist");
+    }
+  }
+
+
+  async track(url){
+    try{
+
+      console.log(tokenG);
+      const result = await axios.get(`${url}`,{
+        headers:{
+          Authorization: `Bearer ${tokenG}`
+        }
+      })
+
+      console.log("result track", result);
+      return result
+    }
+    catch(err){
+      console.log("erro track");
     }
   }
 }

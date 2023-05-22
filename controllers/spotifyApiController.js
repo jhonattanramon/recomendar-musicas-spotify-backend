@@ -122,7 +122,16 @@ const spotifyController = {
       res.status(403).json(err)
     }
 
-  }
+  },
+  track: async (req, res) => {
+
+    try{
+      const track = await classReq.track(req.headers.hreftrack)
+      console.log(track);
+    }catch(err){
+        console.log('err track');
+    }
+        }
 };
 
 module.exports = spotifyController;
