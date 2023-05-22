@@ -76,7 +76,6 @@ class Requests {
 
   async playlistsEmDestaque() {
     try {
-      console.log(tokenG);
       const result = await axios
         .get(`${urlBaseSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`, 
         {
