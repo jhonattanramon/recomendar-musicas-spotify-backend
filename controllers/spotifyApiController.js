@@ -124,7 +124,6 @@ const spotifyController = {
 
   },
   track: async (req, res) => {
-
     try{
       const track = await classReq.track(req.headers.hreftrack)
       console.log(track);

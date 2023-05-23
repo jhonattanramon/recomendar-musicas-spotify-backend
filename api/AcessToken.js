@@ -74,6 +74,7 @@ class Requests {
 
   async playlistsEmDestaque() {
     try {
+      console.log(tokenG);
       const result = await axios
         .get(`${urlBaseSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`, 
         {
@@ -90,7 +91,7 @@ class Requests {
 
   async tracksPlaylist(url){
     try{
-     
+      console.log(tokenG);
         const result = await axios.get(`${url}`, {
           headers:{
             Authorization: `Bearer ${tokenG}`,
@@ -108,13 +109,12 @@ class Requests {
 
   async track(url){
     try{
-
-      console.log(tokenG);
+      console.log("token",tokenG);
       const result = await axios.get(`${url}`,{
         headers:{
           Authorization: `Bearer ${tokenG}`
         }
-      })
+      }).then( res => res)
 
       console.log("result track", result);
       return result
