@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 
 const app = express()
-const port = 3002
+const port = 3004;
 
 
 app.use(express.json());

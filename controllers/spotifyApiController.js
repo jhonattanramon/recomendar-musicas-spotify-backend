@@ -16,6 +16,7 @@ const classReq = new Requests()
 const spotifyController = {
   auth: async (req, res, next) => {
     try {
+    
       tokenTst.token(req.headers.authorization);
       res.status(200).json("ok");
     } catch (err) {
@@ -67,6 +68,7 @@ const spotifyController = {
 
   playlistsEmDestaque: async (req, res) => {
     try {
+        
          const destaquesPlaylists =  await classReq.playlistsEmDestaque();
           res.status(200).json(destaquesPlaylists)
     }catch(err){
@@ -106,9 +108,7 @@ const spotifyController = {
   },
   tracksPlaylist: async (req, res) => {
     try{
-      console.log(req.headers.hreftracks);
      const tracks =  await classReq.tracksPlaylist(req.headers.hreftracks)
-     console.log(tracks);
       res.status(200).json(tracks)
     }catch(err){
       console.log("tracks err");
@@ -125,8 +125,9 @@ const spotifyController = {
   },
   track: async (req, res) => {
     try{
-      const track = await classReq.track(req.headers.hreftrack)
-      console.log(track);
+      const {data} = await classReq.track(req.headers.hreftrack)
+      console.log("track:",data);
+      res.status(200).json(data) 
     }catch(err){
         console.log('err track');
     }

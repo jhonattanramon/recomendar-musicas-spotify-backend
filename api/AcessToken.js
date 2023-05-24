@@ -1,3 +1,5 @@
+const { json } = require("express");
+
 const axios = require("axios").default;
 
 let tokenG;
@@ -74,7 +76,6 @@ class Requests {
 
   async playlistsEmDestaque() {
     try {
-      console.log(tokenG);
       const result = await axios
         .get(`${urlBaseSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`, 
         {
@@ -83,6 +84,7 @@ class Requests {
           }
         })
         .then((res) => res.data);
+
           return result
     } catch (err) {
       console.log("err playsDestaques");
@@ -91,15 +93,11 @@ class Requests {
 
   async tracksPlaylist(url){
     try{
-      console.log(tokenG);
         const result = await axios.get(`${url}`, {
           headers:{
             Authorization: `Bearer ${tokenG}`,
           }
-        }).then( res => res.data)
-
-        console.log("result", result);
-        
+        }).then( res => res.data)        
         return result
     }catch(err){
       console.log("tracks trackPlaylist");
@@ -109,18 +107,17 @@ class Requests {
 
   async track(url){
     try{
-      console.log("token",tokenG);
       const result = await axios.get(`${url}`,{
         headers:{
           Authorization: `Bearer ${tokenG}`
         }
       }).then( res => res)
-
-      console.log("result track", result);
       return result
     }
     catch(err){
       console.log("erro track");
+      const msgError = { msg: "error no servidor"}
+      return msgError
     }
   }
 }
