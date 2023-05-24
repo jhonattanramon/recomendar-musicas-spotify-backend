@@ -17,7 +17,7 @@ var {ClassToken} = require('../AcessToken')
 
 var client_id = process.env.CLIENT_ID_SPOTIFY // Your client id
 var client_secret = process.env.CLIENT_SECRET_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
 
 console.log("cliente id ", client_id);
 
@@ -73,7 +73,6 @@ app.get('/callback', function(req, res) {
   var state = req.query.state || null;
   var storedState = req.cookies ? req.cookies[stateKey] : null;
 
-  console.log(code);
   if (state === null || state !== storedState) {
     res.redirect('/#' +
       querystring.stringify({
