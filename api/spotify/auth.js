@@ -18,7 +18,7 @@ var { default: axios } = require("axios");
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRET_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
 
 var baseURlServer = "https://appnative-backend.onrender.com";
 /**
