@@ -128,14 +128,18 @@ app.get("/callback", function (req, res) {
         //   refresh_token: refresh_token,
         // });
 
-        axios
-          .get("http://localhost:3004/apispotify/token", {
-            headers: {
-              access_token: access_token,
-              refresh_token: refresh_token,
-            },
-          })
-          .then((res) => res);
+        const requisicao = async () => {
+          await axios
+            .get("http://localhost:3004/apispotify/token", {
+              headers: {
+                access_token: access_token,
+                refresh_token: refresh_token,
+              },
+            })
+            .then((res) => res);
+        };
+
+        requisicao();
       } else {
         res.redirect(
           "/#" +
