@@ -18,28 +18,19 @@ const spotifyController = {
     try {
     
       tokenTst.token(req.headers.authorization);
-      res.status(200).json("ok");
+
     } catch (err) {
       console.log("errr");
     }
   },
 
   token: async (req, res) => {
-    console.log("entrou token controler");
-
     try {
-      await axios
-        .get("http://localhost:8887", {
-          headers: {
-            Authorization: `Bearer BQBrUf18R0iOttmbIoMhYcO83O5DLqcj6NCpF2H0cBQRwP52hgHkEWVEiVXZZnjFTzQf3PfrHT4X2X7oYYoDKITl6PTtZvtjcc0lOqAYSYElWCfPDq1wdevl4YAhovpk7-sfZPgUiScx4Prfp1yR7J_YZs7B2Fksx9EqmqNpK47Jgwxp90zWzNv7WTVCJ55jdQc4W6molMBwC4rKhk0`,
-            json: true,
-          },
-        })
-        .then((dados) => console.log(dados.data));
-
-      console.log("token response");
+      console.log("entrou token controler");
+      console.log(req.headers);
+      //  res.status(200).json({ msg: "token chegou" });
     } catch (err) {
-      console.log(err);
+      console.log("error token");
     }
   },
 
