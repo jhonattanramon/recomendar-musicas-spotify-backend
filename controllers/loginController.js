@@ -8,7 +8,6 @@ const LoginController = {
     try {
       const userDeBusca = await RegisterModel.find({
         email: req.body.email,
-        password: req.body.password,
       });
 
       if (userDeBusca.length !== 0) {
