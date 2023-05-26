@@ -9,7 +9,11 @@ const port = 3004;
 
 
 app.use(express.json());
-app.use(cors())
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 // db connection 
 
