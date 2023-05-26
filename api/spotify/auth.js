@@ -18,7 +18,7 @@ var { default: axios } = require("axios");
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRET_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
 
 var baseURlServer = "https://appnative-backend.onrender.com";
 /**
@@ -129,7 +129,7 @@ app.get("/callback", function (req, res) {
         // });
         const requisicao = async () => {
           const validatedToken = await axios
-            .get("http://localhost:3004/apispotify/token", {
+            .get("https://appnative-backend.onrender.com/apispotify/token", {
               headers: {
                 access_token: access_token,
                 refresh_token: refresh_token,
@@ -140,7 +140,9 @@ app.get("/callback", function (req, res) {
 
         requisicao();
 
-        res.redirect("http://localhost:8887/confirmAuth.html");
+        res.redirect(
+          "https://appnative-backend-auth.onrender.com/confirmAuth.html"
+        );
       } else {
         res.redirect(
           "/#" +
