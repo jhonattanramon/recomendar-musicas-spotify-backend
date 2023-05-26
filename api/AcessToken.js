@@ -2,12 +2,13 @@ const { json } = require("express");
 
 const axios = require("axios").default;
 
-let tokenG;
-
+let tokens;
 const tokenTst = {
-  token: (token) =>{tokenG = token},
+  token: (token) => {
+    tokens = token;
+    console.log(tokens);
+  },
 };
-
 
 const urlBaseSpotify = "https://api.spotify.com/v1";
 
@@ -27,7 +28,7 @@ class Requests {
       const result = await axios
         .get(`${urlBaseSpotify}/playlists/37i9dQZF1DX0FOF1IUWK1W`, {
           headers: {
-            Authorization: `Bearer ${tokenG}`,
+            Authorization: `Bearer ${tokens.access_token}`,
           },
         })
         .then((res) => res.data);
@@ -46,7 +47,7 @@ class Requests {
           `https://api.spotify.com/v1/artists?ids=${listaDeArtistas[0]},${listaDeArtistas[1]}`,
           {
             headers: {
-              Authorization: `Bearer ${tokenG}`,
+              Authorization: `Bearer ${tokens.access_token}`,
             },
           }
         )
@@ -65,7 +66,7 @@ class Requests {
       const result = await axios
         .get(`${urlBaseSpotify}/recommendations/available-genre-seeds`, {
           headers: {
-            Authorization: `Bearer ${tokenG}`,
+            Authorization: `Bearer ${tokens.access_token}`,
           },
         })
         .then((res) => res.data);
@@ -77,47 +78,61 @@ class Requests {
   async playlistsEmDestaque() {
     try {
       const result = await axios
-        .get(`${urlBaseSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`, 
-        {
-          headers:{
-            Authorization: `Bearer ${tokenG}`,
+        .get(
+          `${urlBaseSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`,
+          {
+            headers: {
+              Authorization: `Bearer ${tokens.access_token}`,
+            },
           }
-        })
+        )
         .then((res) => res.data);
 
-          return result
+      return result;
     } catch (err) {
       console.log("err playsDestaques");
     }
   }
 
-  async tracksPlaylist(url){
-    try{
-        const result = await axios.get(`${url}`, {
-          headers:{
-            Authorization: `Bearer ${tokenG}`,
-          }
-        }).then( res => res.data)        
-        return result
-    }catch(err){
+  async tracksPlaylist(url) {
+    try {
+      const result = await axios
+        .get(`${url}`, {
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`,
+          },
+        })
+        .then((res) => res.data);
+      return result;
+    } catch (err) {
       console.log("tracks trackPlaylist");
     }
   }
 
-
-  async track(url){
-    try{
-      const result = await axios.get(`${url}`,{
-        headers:{
-          Authorization: `Bearer ${tokenG}`
-        }
-      }).then( res => res)
-      return result
-    }
-    catch(err){
+  async track(url) {
+    try {
+      const result = await axios
+        .get(`${url}`, {
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`,
+          },
+        })
+        .then((res) => res);
+      return result;
+    } catch (err) {
       console.log("erro track");
-      const msgError = { msg: "error no servidor"}
-      return msgError
+      const msgError = { msg: "error no servidor" };
+      return msgError;
+    }
+  }
+
+  async checkToken() {
+    try {
+      if (tokens.access_token) {
+        return true;
+      }
+    } catch (err) {
+      return false;
     }
   }
 }

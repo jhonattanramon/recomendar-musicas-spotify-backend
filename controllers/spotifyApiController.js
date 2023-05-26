@@ -9,16 +9,18 @@ const { ok } = require("assert");
 const { channel } = require("diagnostics_channel");
 const express = require("express");
 
-
-const classReq = new Requests()
-
+const classReq = new Requests();
 
 const spotifyController = {
   auth: async (req, res, next) => {
     try {
-    
-      tokenTst.token(req.headers.authorization);
-
+      if (req.headers.authorization !== "undefined") {
+        tokenTst.token(req.headers.authorization);
+        res.status(200).json({ msg: "ok" });
+      } else {
+        console.log("não autorizado");
+        res.status(401).json({ msg: "não autorizado" });
+      }
     } catch (err) {
       console.log("errr");
     }
@@ -26,10 +28,12 @@ const spotifyController = {
 
   token: async (req, res) => {
     try {
-      console.log("entrou token controler");
-      console.log(req.headers);
+      const { access_token, refresh_token } = req.headers;
+      tokenTst.token({
+        access_token: access_token,
+        refresh_token: refresh_token,
+      });
 
-      
       res.status(200).json({ msg: "token chegou" });
     } catch (err) {
       console.log("error token");
@@ -61,11 +65,10 @@ const spotifyController = {
 
   playlistsEmDestaque: async (req, res) => {
     try {
-        
-         const destaquesPlaylists =  await classReq.playlistsEmDestaque();
-          res.status(200).json(destaquesPlaylists)
-    }catch(err){
-      console.log('getAll');
+      const destaquesPlaylists = await classReq.playlistsEmDestaque();
+      res.status(200).json(destaquesPlaylists);
+    } catch (err) {
+      console.log("getAll");
     }
   },
   playlist: async (req, res) => {
@@ -91,40 +94,36 @@ const spotifyController = {
   },
 
   obterGeneros: async (req, res) => {
-    try{
+    try {
       const classReq = new Requests();
-      const generos =  await classReq.obterGeneros()
-      
-    }catch(err){
-      console.log('obterGeneros');
+      const generos = await classReq.obterGeneros();
+    } catch (err) {
+      console.log("obterGeneros");
     }
   },
   tracksPlaylist: async (req, res) => {
-    try{
-     const tracks =  await classReq.tracksPlaylist(req.headers.hreftracks)
-      res.status(200).json(tracks)
-    }catch(err){
+    try {
+      const tracks = await classReq.tracksPlaylist(req.headers.hreftracks);
+      res.status(200).json(tracks);
+    } catch (err) {
       console.log("tracks err");
     }
   },
-  authConfirmado: async ( req, res ) => {
-    try{
-
-
-    }catch(err){
-      res.status(403).json(err)
+  authConfirmado: async (req, res) => {
+    try {
+    } catch (err) {
+      res.status(403).json(err);
     }
-
   },
   track: async (req, res) => {
-    try{
-      const {data} = await classReq.track(req.headers.hreftrack)
-      console.log("track:",data);
-      res.status(200).json(data) 
-    }catch(err){
-        console.log('err track');
+    try {
+      const { data } = await classReq.track(req.headers.hreftrack);
+      console.log("track:", data);
+      res.status(200).json(data);
+    } catch (err) {
+      console.log("err track");
     }
-        }
+  },
 };
 
 module.exports = spotifyController;
