@@ -6,34 +6,44 @@ const { Requests } = require("../api/AcessToken");
 const LoginController = {
   login: async (req, res) => {
     try {
-      console.log("aqui");
-      const users = await RegisterModel.find();
-
-      console.log(req.body);
       const userDeBusca = await RegisterModel.find({
         email: req.body.email,
         password: req.body.password,
       });
-      console.log(userDeBusca.length);
 
       if (userDeBusca.length !== 0) {
-        console.log("usario encontrado");
-
-        const access =
+        if (
+          userDeBusca[0].password != req.body.password &&
+          userDeBusca[0].email == req.body.email
+        ) {
+          res.status(401).json({ access: "senha incorreta" });
+        } else if (
+          userDeBusca[0].password == req.body.password &&
+          userDeBusca[0].email != req.body.email
+        ) {
+          res.status(401).json({ access: "email incorreto" });
+        } else if (
           userDeBusca[0].password == req.body.password &&
           userDeBusca[0].email == req.body.email
-            ? true
-            : false;
+        ) {
+          const access =
+            userDeBusca[0].password == req.body.password &&
+            userDeBusca[0].email == req.body.email
+              ? true
+              : false;
 
-        const requisicoes = new Requests();
+          const requisicoes = new Requests();
 
-        const validacao = await requisicoes.checkToken();
+          const validacao = await requisicoes.checkToken();
 
-        console.log("validação", validacao);
+          console.log("validação", validacao);
 
-        console.log(access);
+          console.log(access);
 
-        res.json({ access: access });
+          res.json({ access: access });
+        }
+
+        res.status(400).json({ access: "algo deu errado" });
       } else {
         res.status(404).json({ menssage: "usuario não encontrado" });
         console.log("nenhum usuario encontrado");
