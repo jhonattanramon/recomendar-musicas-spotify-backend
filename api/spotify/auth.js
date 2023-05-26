@@ -127,9 +127,8 @@ app.get("/callback", function (req, res) {
         //   access_token: access_token,
         //   refresh_token: refresh_token,
         // });
-
         const requisicao = async () => {
-          await axios
+          const validatedToken = await axios
             .get("http://localhost:3004/apispotify/token", {
               headers: {
                 access_token: access_token,
@@ -137,9 +136,13 @@ app.get("/callback", function (req, res) {
               },
             })
             .then((res) => res);
+
+          console.log(res);
         };
 
         requisicao();
+
+        res.redirect("http://localhost:8887/confirmAuth.html");
       } else {
         res.redirect(
           "/#" +
