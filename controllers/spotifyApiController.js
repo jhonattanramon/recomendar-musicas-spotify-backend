@@ -28,7 +28,9 @@ const spotifyController = {
     try {
       console.log("entrou token controler");
       console.log(req.headers);
-      //  res.status(200).json({ msg: "token chegou" });
+
+      
+      res.status(200).json({ msg: "token chegou" });
     } catch (err) {
       console.log("error token");
     }
