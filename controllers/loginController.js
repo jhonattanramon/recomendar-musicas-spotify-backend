@@ -15,12 +15,12 @@ const LoginController = {
           userDeBusca[0].password != req.body.password &&
           userDeBusca[0].email == req.body.email
         ) {
-          res.status(401).json({ access: "senha incorreta" });
+          res.statusCode(401);
         } else if (
           userDeBusca[0].password == req.body.password &&
           userDeBusca[0].email != req.body.email
         ) {
-          res.status(401).json({ access: "email incorreto" });
+          res.statusCode(401);
         } else if (
           userDeBusca[0].password == req.body.password &&
           userDeBusca[0].email == req.body.email
