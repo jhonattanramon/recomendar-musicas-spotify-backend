@@ -12,6 +12,7 @@ const express = require("express");
 const classReq = new Requests();
 
 const spotifyController = {
+  //autenticação
   auth: async (req, res, next) => {
     try {
       if (req.headers.authorization !== "undefined") {
@@ -63,6 +64,8 @@ const spotifyController = {
     }
   },
 
+  //playlist
+
   playlistsEmDestaque: async (req, res) => {
     try {
       const destaquesPlaylists = await classReq.playlistsEmDestaque();
@@ -83,6 +86,8 @@ const spotifyController = {
     }
   },
 
+  //usuario
+
   obterVariosArtistas: async (req, res) => {
     try {
       const classReq = new Requests();
@@ -94,6 +99,8 @@ const spotifyController = {
     }
   },
 
+  //generos
+
   obterGeneros: async (req, res) => {
     try {
       const classReq = new Requests();
@@ -102,18 +109,15 @@ const spotifyController = {
       console.log("obterGeneros");
     }
   },
+
+  //tracks
+
   tracksPlaylist: async (req, res) => {
     try {
       const tracks = await classReq.tracksPlaylist(req.headers.hreftracks);
       res.status(200).json(tracks);
     } catch (err) {
       console.log("tracks err");
-    }
-  },
-  authConfirmado: async (req, res) => {
-    try {
-    } catch (err) {
-      res.status(403).json(err);
     }
   },
   track: async (req, res) => {
@@ -123,6 +127,20 @@ const spotifyController = {
       res.status(200).json(data);
     } catch (err) {
       console.log("err track");
+    }
+  },
+
+  topTracksUser: async (req, res) => {
+    try {
+    } catch (err) {
+      console.log("topTracksUser err");
+    }
+  },
+
+  authConfirmado: async (req, res) => {
+    try {
+    } catch (err) {
+      res.status(403).json(err);
     }
   },
 };

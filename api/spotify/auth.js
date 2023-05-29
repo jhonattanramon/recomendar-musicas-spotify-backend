@@ -140,20 +140,11 @@ app.get("/callback", function (req, res) {
               },
             })
             .then((res) => (resultToken = res.data));
-
-          console.log(resultToken);
         })();
 
-        console.log(resultToken);
-        if (resultToken == null) {
-          res.redirect(
-            "https://appnative-backend-auth.onrender.com/confirmAuth.html"
-          );
-        } else {
-          res.redirect(
-            "https://appnative-backend-auth.onrender.com/errorAuth.html"
-          );
-        }
+        res.redirect(
+          "https://appnative-backend-auth.onrender.com/confirmAuth.html"
+        );
       } else {
         res.redirect(
           "/#" +
