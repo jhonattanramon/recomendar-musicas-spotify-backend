@@ -40,9 +40,9 @@ const LoginController = {
           console.log(access);
 
           res.json({ access: access });
+        } else {
+          res.status(400).json({ access: "algo deu errado" });
         }
-
-        res.status(400).json({ access: "algo deu errado" });
       } else {
         res.status(404).json({ menssage: "usuario não encontrado" });
         console.log("nenhum usuario encontrado");

@@ -68,7 +68,8 @@ const spotifyController = {
       const destaquesPlaylists = await classReq.playlistsEmDestaque();
       res.status(200).json(destaquesPlaylists);
     } catch (err) {
-      console.log("getAll");
+      res.status(500).json(err);
+      console.log();
     }
   },
   playlist: async (req, res) => {

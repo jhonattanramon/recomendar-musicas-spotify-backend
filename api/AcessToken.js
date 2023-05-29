@@ -87,7 +87,6 @@ class Requests {
           }
         )
         .then((res) => res.data);
-
       return result;
     } catch (err) {
       console.log("err playsDestaques");

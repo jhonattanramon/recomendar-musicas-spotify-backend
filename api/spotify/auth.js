@@ -14,13 +14,15 @@ var cors = require("cors");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
 var { ClassToken } = require("../AcessToken");
-var { default: axios } = require("axios");
+var axios = require("axios").default;
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRET_SPOTIFY; // Your secret
 var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
 
 var baseURlServer = "https://appnative-backend.onrender.com";
+var baseURLDev = "http://localhost:3004";
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -111,7 +113,7 @@ app.get("/callback", function (req, res) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function (error, response, body) {
-          console.log(body);
+          // console.log(body);
         });
 
         // we can also pass the token to the browser to make requests from there
@@ -127,22 +129,31 @@ app.get("/callback", function (req, res) {
         //   access_token: access_token,
         //   refresh_token: refresh_token,
         // });
-        const requisicao = async () => {
-          const validatedToken = await axios
-            .get("https://appnative-backend.onrender.com/apispotify/token", {
+        let resultToken = null;
+
+        (async function () {
+          await axios
+            .get(`${baseURlServer}/apispotify/token`, {
               headers: {
                 access_token: access_token,
                 refresh_token: refresh_token,
               },
             })
-            .then((res) => res);
-        };
+            .then((res) => (resultToken = res.data));
 
-        requisicao();
+          console.log(resultToken);
+        })();
 
-        res.redirect(
-          "https://appnative-backend-auth.onrender.com/confirmAuth.html"
-        );
+        console.log(resultToken);
+        if (resultToken == null) {
+          res.redirect(
+            "https://appnative-backend-auth.onrender.com/confirmAuth.html"
+          );
+        } else {
+          res.redirect(
+            "https://appnative-backend-auth.onrender.com/errorAuth.html"
+          );
+        }
       } else {
         res.redirect(
           "/#" +
