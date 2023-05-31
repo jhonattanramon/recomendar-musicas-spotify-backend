@@ -22,6 +22,8 @@ var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
 
 var baseURlServer = "https://appnative-backend.onrender.com";
 var baseURLDev = "http://localhost:3004";
+var basURLDevAuth = "http://localhost:8887";
+var baseURLserverAuth = "https://appnative-backend-auth.onrender.com";
 
 /**
  * Generates a random string containing numbers and letters
@@ -142,9 +144,7 @@ app.get("/callback", function (req, res) {
             .then((res) => (resultToken = res.data));
         })();
 
-        res.redirect(
-          "https://appnative-backend-auth.onrender.com/confirmAuth.html"
-        );
+        res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
       } else {
         res.redirect(
           "/#" +

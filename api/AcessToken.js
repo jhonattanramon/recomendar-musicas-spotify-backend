@@ -134,5 +134,21 @@ class Requests {
       return false;
     }
   }
+
+  async pesquisa(nameTrack) {
+    try {
+      const { data } = await axios.get(
+        `${urlBaseSpotify}/search?q=remaster:track:${nameTrack}&type=track&limit=50`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`,
+          },
+        }
+      );
+      return data;
+    } catch (err) {
+      console.log("erro pessquisa!!");
+    }
+  }
 }
 module.exports = { Requests, tokenTst };

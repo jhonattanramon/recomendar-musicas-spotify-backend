@@ -143,6 +143,18 @@ const spotifyController = {
       res.status(403).json(err);
     }
   },
+
+  //pesquisa
+
+  pesquisa: async (req, res) => {
+    try {
+      // const nameTrack = req.body.nameTrack;
+      const result = await classReq.pesquisa(req.headers.nametrack);
+      res.status(200).json(result);
+    } catch (err) {
+      console.log("err pesquisa");
+    }
+  },
 };
 
 module.exports = spotifyController;
