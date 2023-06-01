@@ -15,6 +15,8 @@ router.route('/track').get( (req, res) => spotifyController.track(req,res))
 router
   .route("/pesquisa")
   .get((req, res) => spotifyController.pesquisa(req, res));
-
+router
+  .route("/pesquisagenere")
+  .get((req, res) => spotifyController.pesquisaGenere(req, res));
 
 module.exports = router;

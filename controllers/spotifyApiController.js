@@ -141,6 +141,15 @@ const spotifyController = {
       console.log("err pesquisa");
     }
   },
+
+  pesquisaGenere: async (req, res) => {
+    try {
+      console.log("pesquisaGenere");
+      const result = await classReq.pesquisaGenere();
+    } catch (err) {
+      console.log("pesquisaGenere");
+    }
+  },
 };
 
 module.exports = spotifyController;

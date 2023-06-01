@@ -1,5 +1,3 @@
-const { json } = require("express");
-
 const axios = require("axios").default;
 
 let tokens;
@@ -151,16 +149,44 @@ class Requests {
     }
   }
 
-  async pesquisa(nameTrack) {
+  async pesquisaGenere({ genre, type }) {
     try {
-      const { data } = await axios.get(
-        `${urlBaseSpotify}/search?q=remaster:track:${nameTrack}&type=track&limit=50`,
-        {
-          headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
-          },
-        }
-      );
+      if (genre != undefined && type != undefined) {
+        const { data } = await axios.get(
+          `${urlBaseSpotify}/search?q=remaster:genre:${genre}&type=${type}`,
+          {
+            headers: {
+              Authorization: `Bearer ${tokens.accessToken}`,
+            },
+          }
+        );
+        return data;
+      } else {
+        return;
+      }
+    } catch (err) {
+      console.log("pesquisaGenere");
+    }
+  }
+
+  async pesquisa({ nameTrack, nameArtist }) {
+    try {
+      let url;
+      if (nameTrack != undefined && nameArtist == undefined) {
+        url = `${urlBaseSpotify}/search?q=remaster:track:${nameTrack}&type=track&limit=50`;
+      } else if (nameTrack == undefined && nameArtist != undefined) {
+        url = `${urlBaseSpotify}/search?q=remaster:artist:${nameArtist}&type=artist&limit=50`;
+      } else if (nameArtist != undefined && nameTrack != undefined) {
+        url = `${urlBaseSpotify}/search?q=remaster:track:${nameTrack}:artist:${nameArtist}&type=track:artist&limit=50`;
+      } else {
+        url = `${urlBaseSpotify}/search?q=remaster:genre=pagode&type=artist `;
+      }
+
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${tokens.access_token}`,
+        },
+      });
       return data;
     } catch (err) {
       console.log("erro pessquisa!!");

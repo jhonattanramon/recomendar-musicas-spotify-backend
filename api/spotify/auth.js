@@ -18,7 +18,7 @@ var axios = require("axios").default;
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRET_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
 
 var baseURlServer = "https://appnative-backend.onrender.com";
 var baseURLDev = "http://localhost:3004";
@@ -144,7 +144,7 @@ app.get("/callback", function (req, res) {
             .then((res) => (resultToken = res.data));
         })();
 
-        res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
+        res.redirect(`${basURLDevAuth}/confirmAuth.html`);
       } else {
         res.redirect(
           "/#" +
