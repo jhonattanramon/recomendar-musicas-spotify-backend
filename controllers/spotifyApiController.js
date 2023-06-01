@@ -4,7 +4,7 @@ const { RegisterUser: RegisterModel } = require("../models/RegisterUser");
 const axios = require("axios").default;
 var $ = require("jquery");
 require("dotenv/config");
-const { Requests, tokenTst } = require("../api/AcessToken");
+const { Requests, tokenTst } = require("../api/requisicoes");
 const { ok } = require("assert");
 const { channel } = require("diagnostics_channel");
 const express = require("express");
@@ -42,23 +42,9 @@ const spotifyController = {
   },
 
   user: async (req, res) => {
-    console.log(req.headers.authorization);
-
     try {
-      console.log("res");
-
-      await axios
-        .get("https://api.spotify.com/v1/me", {
-          headers: {
-            Authorization: ``,
-            json: true,
-          },
-        })
-        .then((dados) => console.log(dados));
-      console.log(response);
-
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.status(200).send({ res: response });
+      const inforUserSpotify = await classReq.user();
+      res.status(200).json(inforUserSpotify);
     } catch (err) {
       console.log("err");
     }

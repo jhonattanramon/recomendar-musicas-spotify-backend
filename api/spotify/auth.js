@@ -13,7 +13,7 @@ var request = require("request"); // "Request" library
 var cors = require("cors");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
-var { ClassToken } = require("../AcessToken");
+var { ClassToken } = require("../requisicoes");
 var axios = require("axios").default;
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id

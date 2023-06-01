@@ -1,7 +1,7 @@
 const { Console, log } = require("console");
 const { RegisterUser: RegisterModel } = require("../models/RegisterUser");
 
-const { Requests } = require("../api/AcessToken");
+const { Requests } = require("../api/requisicoes");
 
 const LoginController = {
   login: async (req, res) => {
