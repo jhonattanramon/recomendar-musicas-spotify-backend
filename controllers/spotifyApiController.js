@@ -144,10 +144,13 @@ const spotifyController = {
 
   pesquisaGenere: async (req, res) => {
     try {
-      console.log("pesquisaGenere");
-      const result = await classReq.pesquisaGenere();
+        const result = await classReq.pesquisaGenere({
+          genre: req.headers.genere,
+          type: req.headers.type,
+        });
+        res.status(200).json(result);
     } catch (err) {
-      console.log("pesquisaGenere");
+      console.log("err");
     }
   },
 };

@@ -152,14 +152,21 @@ class Requests {
   async pesquisaGenere({ genre, type }) {
     try {
       if (genre != undefined && type != undefined) {
-        const { data } = await axios.get(
-          `${urlBaseSpotify}/search?q=remaster:genre:${genre}&type=${type}`,
-          {
-            headers: {
-              Authorization: `Bearer ${tokens.accessToken}`,
-            },
-          }
-        );
+        console.log(genre, type);
+        console.log(tokens.access_token);
+        const { data } = await axios
+          .get(
+            `${urlBaseSpotify}/search?q=remaster=genre:${genre}&type=${type}&limit=50`,
+            {
+              headers: {
+                Authorization: `Bearer ${tokens.access_token}`,
+              },
+            }
+          )
+          .then((res) => res);
+
+        console.log("result try: " + data);
+
         return data;
       } else {
         return;

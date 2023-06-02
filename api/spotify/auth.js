@@ -135,7 +135,7 @@ app.get("/callback", function (req, res) {
 
         (async function () {
           await axios
-            .get(`${baseURlServer}/apispotify/token`, {
+            .get(`${baseURLDev}/apispotify/token`, {
               headers: {
                 access_token: access_token,
                 refresh_token: refresh_token,
