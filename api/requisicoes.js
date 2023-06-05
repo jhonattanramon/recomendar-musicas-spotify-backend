@@ -77,6 +77,135 @@ class Requests {
 
   async obterGeneros() {
     try {
+      const generosTraduzidos = [
+        "acústico",
+        "afrobeat",
+        "alt-rock",
+        "alternativo",
+        "ambiente",
+        "anime",
+        "black-metal",
+        "bluegrass",
+        "blues",
+        "bossanova",
+        "brasil",
+        "breakbeat ",
+        "british",
+        "cantopop",
+        "chicago-house",
+        "children",
+        "chill",
+        "classical",
+        "club",
+        "comedy",
+        "country",
+        "dance",
+        "dancehall",
+        "death -metal",
+        "deep-house",
+        "detroit-techno",
+        "disco",
+        "disney",
+        "drum-and-bass",
+        "dub",
+        "dubstep",
+        "edm",
+        "electro",
+        "eletrônico ",
+        "emo",
+        "folk",
+        "forro",
+        "french",
+        "funk",
+        "garage",
+        "german",
+        "gospel",
+        "goth",
+        "grindcore",
+        "groove",
+        "grunge",
+        "guitar",
+        "happy",
+        "hard-rock",
+        "hardcore",
+        "hardstyle",
+        "heavy-metal",
+        "hip-hop",
+        "holidays",
+        "honky-tonk",
+        "house",
+        "idm ",
+        "indian",
+        "indie",
+        "indie-pop",
+        "industrial",
+        "iranian",
+        "j-dance",
+        "j-idol",
+        "j-pop",
+        "j-rock",
+        "jazz ",
+        "k-pop",
+        "kids",
+        "latin",
+        "latino",
+        "malay",
+        "mandopop",
+        "metal",
+        "metal-misc",
+        "metalcore",
+        "minimal-techno",
+        "filmes ",
+        "mpb",
+        "new-age",
+        "new-release",
+        "ópera",
+        "pagode",
+        "party",
+        "philippines-opm",
+        "piano",
+        "pop",
+        "pop-film",
+        "post-dubstep",
+        "power-pop",
+        "progressive-house",
+        "psych-rock",
+        "punk",
+        "punk-rock",
+        "r-n-b",
+        "rainy-day",
+        "reggae",
+        "reggaeton ",
+        "road-trip",
+        "rock",
+        "rock-n-roll",
+        "rockabilly",
+        "romance",
+        "triste",
+        "salsa",
+        "samba",
+        "sertanejo",
+        "show-tunes",
+        "cantor-compositor",
+        "ska",
+        "sono",
+        "compositor",
+        "alma",
+        "trilhas sonoras",
+        "espanhol",
+        "estudo",
+        "verão",
+        "sueco",
+        "synth-pop",
+        "tango ",
+        "techno",
+        "trance",
+        "trip-hop",
+        "turco",
+        "work-out",
+        "world-music",
+      ];
+
       const result = await axios
         .get(`${urlBaseSpotify}/recommendations/available-genre-seeds`, {
           headers: {
@@ -84,6 +213,12 @@ class Requests {
           },
         })
         .then((res) => res.data);
+      console.log(result);
+
+      return {
+        result: result,
+        generesTraduzido: generosTraduzidos,
+      };
     } catch (err) {
       console.log("obterGeneros");
     }
@@ -176,18 +311,21 @@ class Requests {
     }
   }
 
+  async pesquisaTrack(nameTrack) {
+    try {
+      const result = await axios
+        .get(`${urlBaseSpotify}/search?q=remaster:track:${nameTrack}type=track`)
+        .then((res) => res);
+      console.log(result);
+      return result;
+    } catch (err) {
+      console.log("pesquisaTrack");
+    }
+  }
+
   async pesquisa({ nameTrack, nameArtist }) {
     try {
-      let url;
-      if (nameTrack != undefined && nameArtist == undefined) {
-        url = `${urlBaseSpotify}/search?q=remaster:track:${nameTrack}&type=track&limit=50`;
-      } else if (nameTrack == undefined && nameArtist != undefined) {
-        url = `${urlBaseSpotify}/search?q=remaster:artist:${nameArtist}&type=artist&limit=50`;
-      } else if (nameArtist != undefined && nameTrack != undefined) {
-        url = `${urlBaseSpotify}/search?q=remaster:track:${nameTrack}:artist:${nameArtist}&type=track:artist&limit=50`;
-      } else {
-        url = `${urlBaseSpotify}/search?q=remaster:genre=pagode&type=artist `;
-      }
+      let url = `${urlBaseSpotify}/search?q=remaster:genre=pagode&type=artist `;
 
       const { data } = await axios.get(url, {
         headers: {

@@ -91,6 +91,7 @@ const spotifyController = {
     try {
       const classReq = new Requests();
       const generos = await classReq.obterGeneros();
+      res.status(200).json(generos);
     } catch (err) {
       console.log("obterGeneros");
     }
@@ -142,13 +143,22 @@ const spotifyController = {
     }
   },
 
+  pesquisaTrack: async (req, res) => {
+    try {
+      const result = await classReq.pesquisaTrack(req.body.nametrack);
+      res.status(200).json(result);
+    } catch (err) {
+      console.log("err pesquisa track");
+    }
+  },
+
   pesquisaGenere: async (req, res) => {
     try {
-        const result = await classReq.pesquisaGenere({
-          genre: req.headers.genere,
-          type: req.headers.type,
-        });
-        res.status(200).json(result);
+      const result = await classReq.pesquisaGenere({
+        genre: req.headers.genere,
+        type: req.headers.type,
+      });
+      res.status(200).json(result);
     } catch (err) {
       console.log("err");
     }
