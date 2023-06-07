@@ -139,13 +139,13 @@ const spotifyController = {
       const result = await classReq.pesquisa(req.headers.nametrack);
       res.status(200).json(result);
     } catch (err) {
-      console.log("err pesquisa");
+      console.log("err pesquisa");  
     }
   },
 
   pesquisaTrack: async (req, res) => {
     try {
-      const result = await classReq.pesquisaTrack(req.body.nametrack);
+      const result = await classReq.pesquisaTrack(req.headers.nametrack);
       res.status(200).json(result);
     } catch (err) {
       console.log("err pesquisa track");

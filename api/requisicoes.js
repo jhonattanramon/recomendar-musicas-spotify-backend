@@ -313,9 +313,15 @@ class Requests {
 
   async pesquisaTrack(nameTrack) {
     try {
+      console.log(tokens.access_token);
+      console.log(nameTrack);
       const result = await axios
-        .get(`${urlBaseSpotify}/search?q=remaster:track:${nameTrack}type=track`)
-        .then((res) => res);
+        .get(`${urlBaseSpotify}/search?q=${nameTrack}&type=track`, {
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`,
+          },
+        })
+        .then((res) => console.log(res));
       console.log(result);
       return result;
     } catch (err) {
