@@ -321,7 +321,7 @@ class Requests {
             Authorization: `Bearer ${tokens.access_token}`,
           },
         })
-        .then((res) => console.log(res));
+        .then((res) => res.data);
       console.log(result);
       return result;
     } catch (err) {
