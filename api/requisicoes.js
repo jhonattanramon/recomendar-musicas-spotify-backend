@@ -257,6 +257,22 @@ class Requests {
     }
   }
 
+  async tracksArtist(id) {
+    try {
+      const result = await axios
+        .get(`${urlBaseSpotify}/artists/${id}/top-tracks?market=BR`, {
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`,
+          },
+        })
+        .then((res) => res.data);
+
+      return result;
+    } catch (err) {
+      console.log("track artists");
+    }
+  }
+
   async track(url) {
     try {
       const result = await axios
