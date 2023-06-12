@@ -107,6 +107,17 @@ const spotifyController = {
       console.log("tracks err");
     }
   },
+
+  tracksArtists: async (req, res) => {
+    try {
+      console.log(req.headers.id);
+      const tracks = await classReq.tracksArtist(req.headers.id);
+      res.status(200).json(tracks);
+    } catch (err) {
+      console.log("tracks err track artist");
+    }
+  },
+
   track: async (req, res) => {
     try {
       const { data } = await classReq.track(req.headers.hreftrack);
@@ -139,7 +150,7 @@ const spotifyController = {
       const result = await classReq.pesquisa(req.headers.nametrack);
       res.status(200).json(result);
     } catch (err) {
-      console.log("err pesquisa");  
+      console.log("err pesquisa");
     }
   },
 
