@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style type="text/css">
     body {
-      background-color: #1DB954;
+      background-color: #ffffff;
       text-align: center;
       padding-top: 100px;
       display: flex;
@@ -18,7 +18,7 @@
     .button {
       display: inline-block;
       margin: 10px;
-      padding: 20px 35px;
+      padding: 20px 35  px;
       font-size: 20px; 
       font-weight: bold;
       text-decoration: none;
@@ -46,11 +46,11 @@
     </style>
   </head>
 
-  <body>
+  <body onload="loginAuth()">
     <div class="container">
       <div id="login">
         <h1>This is an example of the Authorization Code flow</h1>
-        <a href="/login" class="button">Logar com Spotify</a>
+        <Button href="/login" id="buttonLogin" class="button">Logar com Spotify</Button>
       </div>
       <div id="loggedin">
         <div id="user-profile">
@@ -79,6 +79,7 @@
           </dl>
         </div>
       </div>
+
     </script>
 
     <script id="oauth-template" type="text/x-handlebars-template">
@@ -92,6 +93,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script>
+      document.getElementById("buttonLogin").click()
       (function() {
 
         /**
