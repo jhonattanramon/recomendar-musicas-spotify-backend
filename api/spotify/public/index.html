@@ -4,6 +4,31 @@
     <title>Example of the Authorization Code flow with Spotify</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style type="text/css">
+    body {
+      background-color: #1DB954;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    .button {
+      display: inline-block;
+      margin: 10px;
+      padding: 15px 30px;
+      font-size: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      text-transform: uppercase;
+      border-radius: 30px;
+      color: #FFFFFF;
+      background-color: #1DB954;
+      border: none;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .button:hover {
+      background-color: #1ED760;
+      cursor: pointer;
+    }
       /* #login, #loggedin {
         display: none;
       } */
@@ -20,14 +45,14 @@
     <div class="container">
       <div id="login">
         <h1>This is an example of the Authorization Code flow</h1>
-        <a href="/login" class="btn btn-primary">Log in with Spotify</a>
+        <a href="/login" class="button">Logar com Spotify</a>
       </div>
       <div id="loggedin">
         <div id="user-profile">
         </div>
         <div id="oauth">
         </div>
-        <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+        <button class="button" id="obtain-new-token">Obtain new token using the refresh token</button>
       </div>
     </div>
 
