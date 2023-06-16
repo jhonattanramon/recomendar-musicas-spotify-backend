@@ -9,6 +9,7 @@ const { ok } = require("assert");
 const { channel } = require("diagnostics_channel");
 const express = require("express");
 
+
 const classReq = new Requests();
 
 const spotifyController = {
@@ -51,6 +52,15 @@ const spotifyController = {
   },
 
   //playlist
+
+  criarPlaylist: async (req, res) => {
+    try {
+      const playlistCriada = await classReq.criarPlaylist();
+      res.status(200).json(playlistCriada);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
 
   playlistsEmDestaque: async (req, res) => {
     try {

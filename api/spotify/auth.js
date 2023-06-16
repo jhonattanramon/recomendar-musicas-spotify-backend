@@ -115,27 +115,15 @@ app.get("/callback", function (req, res) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function (error, response, body) {
-          // console.log(body);
+          console.log(body);
         });
 
-        // we can also pass the token to the browser to make requests from there
-        // res.redirect(
-        //   "http://localhost:19006/#" +
-        //     querystring.stringify({
-        //       access_token: access_token,
-        //       refresh_token: refresh_token,
-        //     })
-        // );
-
-        // res.redirect("http://localhost:3004/token", {
-        //   access_token: access_token,
-        //   refresh_token: refresh_token,
-        // });
         let resultToken = null;
 
         (async function () {
+          console.log(access_token);
           await axios
-            .get(`${baseURlServer}/apispotify/token`, {
+            .get(`${baseURLDev}/apispotify/token`, {
               headers: {
                 access_token: access_token,
                 refresh_token: refresh_token,
@@ -144,7 +132,7 @@ app.get("/callback", function (req, res) {
             .then((res) => (resultToken = res.data));
         })();
 
-        res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
+        res.redirect(`${basURLDevAuth}/confirmAuth.html`);
       } else {
         res.redirect(
           "/#" +

@@ -1,10 +1,19 @@
 const axios = require("axios").default;
 
 let tokens;
+let userID;
+
 const tokenTst = {
   token: (token) => {
     tokens = token;
     console.log(tokens);
+  },
+};
+
+const getUserID = {
+  id: (id) => {
+    userID = id;
+    console.log(getUserID);
   },
 };
 
@@ -357,6 +366,19 @@ class Requests {
       return data;
     } catch (err) {
       console.log("erro pessquisa!!");
+    }
+  }
+
+  async criarPlaylist() {
+    try {
+      const result = await axios.post(
+        `${urlBaseSpotify}/users/${userID}/playlist`
+      );
+
+      console.log(result);
+      return result;
+    } catch (err) {
+      console.log("criar playlist");
     }
   }
 }

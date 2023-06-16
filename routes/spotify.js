@@ -52,4 +52,10 @@ router
   .route("/obtervariosartistas")
   .get((req, res) => spotifyController.obterVariosArtistas(req, res));
 
+
+  router
+    .route("/criarPlaylist")
+    .post((req, res) => spotifyController.criarPlaylist(req, res));
+
+    
 module.exports = router;
