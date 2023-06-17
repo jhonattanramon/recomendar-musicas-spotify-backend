@@ -54,7 +54,7 @@ router
 
 
   router
-    .route("/criarPlaylist")
+    .route("/criarplaylist")
     .post((req, res) => spotifyController.criarPlaylist(req, res));
 
     

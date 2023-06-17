@@ -108,7 +108,7 @@ app.get("/callback", function (req, res) {
     request.post(authOptions, function (error, response, body) {
       if (!error && response.statusCode === 200) {
         var access_token = body.access_token,
-          refresh_token = body.refresh_token;
+        refresh_token = body.refresh_token;
 
 
         var options = {
@@ -119,16 +119,16 @@ app.get("/callback", function (req, res) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function (error, response, body) {
-          //console.log(body);
+          console.log("body",body);
         });
 
         let resultToken = null;
-
+       
         (async function () {
-          //console.log(access_token);
           await axios
             .get(`${baseURlServer}/apispotify/token`, {
               headers: {
+                body: body,
                 access_token: access_token,
                 refresh_token: refresh_token,
               },

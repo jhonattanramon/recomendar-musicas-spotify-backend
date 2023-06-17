@@ -32,6 +32,7 @@ class Requests {
 
   async user() {
     try {
+      console.log(tokens.access_token);
       const result = await axios
         .get("https://api.spotify.com/v1/me", {
           headers: {
@@ -39,7 +40,7 @@ class Requests {
           },
         })
         .then((res) => res.data);
-
+        console.log(result);
       return result;
     } catch (err) {
       console.log("erros");
@@ -86,135 +87,6 @@ class Requests {
 
   async obterGeneros() {
     try {
-      const generosTraduzidos = [
-        "acústico",
-        "afrobeat",
-        "alt-rock",
-        "alternativo",
-        "ambiente",
-        "anime",
-        "black-metal",
-        "bluegrass",
-        "blues",
-        "bossanova",
-        "brasil",
-        "breakbeat ",
-        "british",
-        "cantopop",
-        "chicago-house",
-        "children",
-        "chill",
-        "classical",
-        "club",
-        "comedy",
-        "country",
-        "dance",
-        "dancehall",
-        "death -metal",
-        "deep-house",
-        "detroit-techno",
-        "disco",
-        "disney",
-        "drum-and-bass",
-        "dub",
-        "dubstep",
-        "edm",
-        "electro",
-        "eletrônico ",
-        "emo",
-        "folk",
-        "forro",
-        "french",
-        "funk",
-        "garage",
-        "german",
-        "gospel",
-        "goth",
-        "grindcore",
-        "groove",
-        "grunge",
-        "guitar",
-        "happy",
-        "hard-rock",
-        "hardcore",
-        "hardstyle",
-        "heavy-metal",
-        "hip-hop",
-        "holidays",
-        "honky-tonk",
-        "house",
-        "idm ",
-        "indian",
-        "indie",
-        "indie-pop",
-        "industrial",
-        "iranian",
-        "j-dance",
-        "j-idol",
-        "j-pop",
-        "j-rock",
-        "jazz ",
-        "k-pop",
-        "kids",
-        "latin",
-        "latino",
-        "malay",
-        "mandopop",
-        "metal",
-        "metal-misc",
-        "metalcore",
-        "minimal-techno",
-        "filmes ",
-        "mpb",
-        "new-age",
-        "new-release",
-        "ópera",
-        "pagode",
-        "party",
-        "philippines-opm",
-        "piano",
-        "pop",
-        "pop-film",
-        "post-dubstep",
-        "power-pop",
-        "progressive-house",
-        "psych-rock",
-        "punk",
-        "punk-rock",
-        "r-n-b",
-        "rainy-day",
-        "reggae",
-        "reggaeton ",
-        "road-trip",
-        "rock",
-        "rock-n-roll",
-        "rockabilly",
-        "romance",
-        "triste",
-        "salsa",
-        "samba",
-        "sertanejo",
-        "show-tunes",
-        "cantor-compositor",
-        "ska",
-        "sono",
-        "compositor",
-        "alma",
-        "trilhas sonoras",
-        "espanhol",
-        "estudo",
-        "verão",
-        "sueco",
-        "synth-pop",
-        "tango ",
-        "techno",
-        "trance",
-        "trip-hop",
-        "turco",
-        "work-out",
-        "world-music",
-      ];
-
       const result = await axios
         .get(`${urlBaseSpotify}/recommendations/available-genre-seeds`, {
           headers: {
@@ -301,8 +173,10 @@ class Requests {
 
   async checkToken() {
     try {
+    
       if (tokens.access_token) {
-        return true;
+        return tokens;
+
       }
     } catch (err) {
       return false;
@@ -369,10 +243,21 @@ class Requests {
     }
   }
 
-  async criarPlaylist() {
+  async criarPlaylist(data) {
     try {
       const result = await axios.post(
-        `${urlBaseSpotify}/users/${userID}/playlist`
+        `${urlBaseSpotify}/users/${userID}/playlist`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`, 
+            "Content-Type" : "application/json"
+          },
+
+          body:{
+            data: data
+          }
+          
+        }
       );
 
       console.log(result);
@@ -382,4 +267,4 @@ class Requests {
     }
   }
 }
-module.exports = { Requests, tokenTst };
+module.exports = { Requests, tokenTst, getUserID };

@@ -4,10 +4,8 @@ const { RegisterUser: RegisterModel } = require("../models/RegisterUser");
 const axios = require("axios").default;
 var $ = require("jquery");
 require("dotenv/config");
-const { Requests, tokenTst } = require("../api/requisicoes");
-const { ok } = require("assert");
-const { channel } = require("diagnostics_channel");
-const express = require("express");
+const { Requests, tokenTst, getUserID } = require("../api/requisicoes");
+
 
 
 const classReq = new Requests();
@@ -30,10 +28,11 @@ const spotifyController = {
 
   token: async (req, res) => {
     try {
-      const { access_token, refresh_token } = req.headers;
+      const { access_token, refresh_token, body } = req.headers;
       tokenTst.token({
         access_token: access_token,
         refresh_token: refresh_token,
+        body: body
       });
 
       res.status(200).json({ msg: "token chegou" });
@@ -45,7 +44,10 @@ const spotifyController = {
   user: async (req, res) => {
     try {
       const inforUserSpotify = await classReq.user();
-      res.status(200).json(inforUserSpotify);
+      const checkToken = await classReq.checkToken();
+      res.status(200).json({
+        inforUserSpotify: inforUserSpotify,
+        checkToken: checkToken});
     } catch (err) {
       console.log("err");
     }
@@ -55,7 +57,8 @@ const spotifyController = {
 
   criarPlaylist: async (req, res) => {
     try {
-      const playlistCriada = await classReq.criarPlaylist();
+      const playlistCriada = await classReq.criarPlaylist(req.body.data);
+      console.log(playlistCriada);
       res.status(200).json(playlistCriada);
     } catch (err) {
       res.status(500).json(err);
