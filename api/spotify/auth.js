@@ -18,7 +18,8 @@ var axios = require("axios").default;
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRET_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI_PRODUCT // Your redirect uri
+
 
 var baseURlServer = "https://appnative-backend.onrender.com";
 var baseURLDev = "http://localhost:3004";
@@ -78,6 +79,8 @@ app.get("/callback", function (req, res) {
   var state = req.query.state || null;
   var storedState = req.cookies ? req.cookies[stateKey] : null;
 
+ 
+
   if (state === null || state !== storedState) {
     res.redirect(
       "/#" +
@@ -107,6 +110,7 @@ app.get("/callback", function (req, res) {
         var access_token = body.access_token,
           refresh_token = body.refresh_token;
 
+
         var options = {
           url: "https://api.spotify.com/v1/me",
           headers: { Authorization: "Bearer " + access_token },
@@ -115,13 +119,13 @@ app.get("/callback", function (req, res) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function (error, response, body) {
-          console.log(body);
+          //console.log(body);
         });
 
         let resultToken = null;
 
         (async function () {
-          console.log(access_token);
+          //console.log(access_token);
           await axios
             .get(`${baseURLDev}/apispotify/token`, {
               headers: {
