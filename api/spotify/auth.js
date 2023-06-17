@@ -127,7 +127,7 @@ app.get("/callback", function (req, res) {
         (async function () {
           //console.log(access_token);
           await axios
-            .get(`${baseURLDev}/apispotify/token`, {
+            .get(`${baseURlServer}/apispotify/token`, {
               headers: {
                 access_token: access_token,
                 refresh_token: refresh_token,
@@ -136,7 +136,7 @@ app.get("/callback", function (req, res) {
             .then((res) => (resultToken = res.data));
         })();
 
-        res.redirect(`${basURLDevAuth}/confirmAuth.html`);
+        res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
       } else {
         res.redirect(
           "/#" +
