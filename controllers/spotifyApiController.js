@@ -28,16 +28,25 @@ const spotifyController = {
 
   token: async (req, res) => {
     try {
-      const { access_token, refresh_token, body } = req.headers;
+      const { access_token, refresh_token } = req.headers;
       tokenTst.token({
         access_token: access_token,
         refresh_token: refresh_token,
-        body: body
       });
 
       res.status(200).json({ msg: "token chegou" });
     } catch (err) {
       console.log("error token");
+    }
+  },
+
+  getUserID: async (req, res) => {
+    try{
+      const { id } = req.headers 
+      console.log(id);
+      getUserID.id(id)
+    }catch(err){
+      console.log("erro get id");
     }
   },
 
@@ -58,7 +67,6 @@ const spotifyController = {
   criarPlaylist: async (req, res) => {
     try {
       const playlistCriada = await classReq.criarPlaylist(req.body.data);
-      console.log(playlistCriada);
       res.status(200).json(playlistCriada);
     } catch (err) {
       res.status(500).json(err);

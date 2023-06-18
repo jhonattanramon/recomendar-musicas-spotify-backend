@@ -4,6 +4,7 @@ const spotifyController = require("../controllers/spotifyApiController");
 
 //autenticação
 router.route("/token").get((req, res) => spotifyController.token(req, res));
+router.route("/getuserid").get((req, res) => spotifyController.getUserID(req, res))
 router.route("/auth").get((req, res) => spotifyController.auth(req, res));
 router
   .route("/authConfirmado")

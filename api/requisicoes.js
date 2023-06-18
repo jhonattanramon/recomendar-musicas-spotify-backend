@@ -6,14 +6,12 @@ let userID;
 const tokenTst = {
   token: (token) => {
     tokens = token;
-    console.log(tokens);
   },
 };
 
 const getUserID = {
   id: (id) => {
     userID = id;
-    console.log(getUserID);
   },
 };
 
@@ -245,20 +243,20 @@ class Requests {
 
   async criarPlaylist(data) {
     try {
+      console.log(data)
+      console.log(userID)
       const result = await axios.post(
-        `${urlBaseSpotify}/users/${userID}/playlist`,
+        `${urlBaseSpotify}/users/${userID}/playlists`,
         {
+         
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`, 
-            "Content-Type" : "application/json"
-          },
-
-          body:{
-            data: data
+            data: data,
+            Authorization: `Bearer ${tokens.access_token}`
           }
+         
           
         }
-      );
+      ).then( res => console.log(res));
 
       console.log(result);
       return result;

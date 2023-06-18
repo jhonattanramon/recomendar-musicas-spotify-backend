@@ -17,9 +17,10 @@ var { ClassToken } = require("../requisicoes");
 var axios = require("axios").default;
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
-var client_secret = process.env.CLIENT_SECRET_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI_PRODUCT // Your redirect uri
+var client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
+var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
 
+var userId;
 
 var baseURlServer = "https://appnative-backend.onrender.com";
 var baseURLDev = "http://localhost:3004";
@@ -79,8 +80,6 @@ app.get("/callback", function (req, res) {
   var state = req.query.state || null;
   var storedState = req.cookies ? req.cookies[stateKey] : null;
 
- 
-
   if (state === null || state !== storedState) {
     res.redirect(
       "/#" +
@@ -105,11 +104,12 @@ app.get("/callback", function (req, res) {
       json: true,
     };
 
+    console.log(authOptions);
+
     request.post(authOptions, function (error, response, body) {
       if (!error && response.statusCode === 200) {
         var access_token = body.access_token,
-        refresh_token = body.refresh_token;
-
+          refresh_token = body.refresh_token;
 
         var options = {
           url: "https://api.spotify.com/v1/me",
@@ -118,22 +118,29 @@ app.get("/callback", function (req, res) {
         };
 
         // use the access token to access the Spotify Web API
-        request.get(options, function (error, response, body) {
-          console.log("body",body);
+        request.get(options,  function (error, response, body) {
+          //console.log("body",body);
+        ( async () => {
+            await axios.get(`${baseURLDev}/apispotify/getuserid`, {
+              headers: {
+                id: body.id,
+              },
+            }),
+              then((res) => res);
+        })()
         });
 
-        let resultToken = null;
-       
         (async function () {
           await axios
-            .get(`${baseURlServer}/apispotify/token`, {
+            .get(`${baseURLDev}/apispotify/token`, {
               headers: {
-                body: body,
                 access_token: access_token,
                 refresh_token: refresh_token,
               },
             })
-            .then((res) => (resultToken = res.data));
+            .then((res) => res.data);
+
+         
         })();
 
         res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
