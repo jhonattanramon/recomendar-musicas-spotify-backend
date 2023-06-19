@@ -241,28 +241,24 @@ class Requests {
 
   async criarPlaylist(data) {
     try {
-<<<<<<< Updated upstream
       console.log(data);
       console.log(userID);
       console.log(tokens.access_token);
+
       const result = await axios
-        .post(`${urlBaseSpotify}/users/${userID}/playlists`, {
-           
-            "name": "New Playlist",
-            "description": "New playlist description",
-            "public": false,
-          
+        .post(`https://api.spotify.com/users/${userID}/playlists`, {
           headers: {
             Authorization: `Bearer ${tokens.access_token}`,
+            "Content-Type": "application/json",
           },
+          data: JSON.stringify({
+            name: "New Playlist",
+            description: "New playlist description",
+            public: false,
+          }),
         })
         .then((res) => console.log(res));
 
-=======
-      const result = await axios.post(
-        `${urlBaseSpotify}/users/${userID}/playlist`
-      );
->>>>>>> Stashed changes
       console.log(result);
       return result;
     } catch (err) {
