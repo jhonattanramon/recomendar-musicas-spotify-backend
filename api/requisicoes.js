@@ -38,7 +38,7 @@ class Requests {
           },
         })
         .then((res) => res.data);
-        console.log(result);
+      console.log(result);
       return result;
     } catch (err) {
       console.log("erros");
@@ -171,10 +171,8 @@ class Requests {
 
   async checkToken() {
     try {
-    
       if (tokens.access_token) {
         return tokens;
-
       }
     } catch (err) {
       return false;
@@ -243,20 +241,21 @@ class Requests {
 
   async criarPlaylist(data) {
     try {
-      console.log(data)
-      console.log(userID)
-      const result = await axios.post(
-        `${urlBaseSpotify}/users/${userID}/playlists`,
-        {
-         
-          headers: {
-            data: data,
-            Authorization: `Bearer ${tokens.access_token}`
-          }
-         
+      console.log(data);
+      console.log(userID);
+      console.log(tokens.access_token);
+      const result = await axios
+        .post(`${urlBaseSpotify}/users/${userID}/playlists`, {
+           
+            "name": "New Playlist",
+            "description": "New playlist description",
+            "public": false,
           
-        }
-      ).then( res => console.log(res));
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`,
+          },
+        })
+        .then((res) => console.log(res));
 
       console.log(result);
       return result;

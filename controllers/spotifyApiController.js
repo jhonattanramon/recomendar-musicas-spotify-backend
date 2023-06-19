@@ -6,8 +6,6 @@ var $ = require("jquery");
 require("dotenv/config");
 const { Requests, tokenTst, getUserID } = require("../api/requisicoes");
 
-
-
 const classReq = new Requests();
 
 const spotifyController = {
@@ -29,6 +27,7 @@ const spotifyController = {
   token: async (req, res) => {
     try {
       const { access_token, refresh_token } = req.headers;
+
       tokenTst.token({
         access_token: access_token,
         refresh_token: refresh_token,
@@ -41,11 +40,11 @@ const spotifyController = {
   },
 
   getUserID: async (req, res) => {
-    try{
-      const { id } = req.headers 
+    try {
+      const { id } = req.headers;
       console.log(id);
-      getUserID.id(id)
-    }catch(err){
+      getUserID.id(id);
+    } catch (err) {
       console.log("erro get id");
     }
   },
@@ -56,7 +55,8 @@ const spotifyController = {
       const checkToken = await classReq.checkToken();
       res.status(200).json({
         inforUserSpotify: inforUserSpotify,
-        checkToken: checkToken});
+        checkToken: checkToken,
+      });
     } catch (err) {
       console.log("err");
     }
