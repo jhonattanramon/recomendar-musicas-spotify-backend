@@ -241,6 +241,7 @@ class Requests {
 
   async criarPlaylist(data) {
     try {
+<<<<<<< Updated upstream
       console.log(data);
       console.log(userID);
       console.log(tokens.access_token);
@@ -257,6 +258,11 @@ class Requests {
         })
         .then((res) => console.log(res));
 
+=======
+      const result = await axios.post(
+        `${urlBaseSpotify}/users/${userID}/playlist`
+      );
+>>>>>>> Stashed changes
       console.log(result);
       return result;
     } catch (err) {
