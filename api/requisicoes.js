@@ -30,7 +30,6 @@ class Requests {
 
   async user() {
     try {
-      console.log(tokens.access_token);
       const result = await axios
         .get("https://api.spotify.com/v1/me", {
           headers: {
@@ -38,7 +37,6 @@ class Requests {
           },
         })
         .then((res) => res.data);
-      console.log(result);
       return result;
     } catch (err) {
       console.log("erros");
@@ -54,8 +52,6 @@ class Requests {
           },
         })
         .then((res) => res.data);
-
-      // console.log("resilt", result);
 
       return result;
     } catch (err) {
@@ -75,8 +71,6 @@ class Requests {
         )
         .then((res) => res.data);
 
-      console.log(result);
-
       return result;
     } catch (err) {
       console.log("obterVariosArtistas");
@@ -92,12 +86,8 @@ class Requests {
           },
         })
         .then((res) => res.data);
-      console.log(result);
 
-      return {
-        result: result,
-        generesTraduzido: generosTraduzidos,
-      };
+      return result;
     } catch (err) {
       console.log("obterGeneros");
     }
@@ -182,8 +172,6 @@ class Requests {
   async pesquisaGenere({ genre, type }) {
     try {
       if (genre != undefined && type != undefined) {
-        console.log(genre, type);
-        console.log(tokens.access_token);
         const { data } = await axios
           .get(
             `${urlBaseSpotify}/search?q=remaster=genre:${genre}&type=${type}&limit=50`,
@@ -194,8 +182,6 @@ class Requests {
             }
           )
           .then((res) => res);
-
-        console.log("result try: " + data);
 
         return data;
       } else {
@@ -208,8 +194,6 @@ class Requests {
 
   async pesquisaTrack(nameTrack) {
     try {
-      console.log(tokens.access_token);
-      console.log(nameTrack);
       const result = await axios
         .get(`${urlBaseSpotify}/search?q=${nameTrack}&type=track`, {
           headers: {
@@ -217,7 +201,6 @@ class Requests {
           },
         })
         .then((res) => res.data);
-      console.log(result);
       return result;
     } catch (err) {
       console.log("pesquisaTrack");
@@ -239,27 +222,31 @@ class Requests {
     }
   }
 
-  async criarPlaylist(data) {
+  async criarPlaylist(dataUser) {
     try {
-      console.log(data);
-      console.log(userID);
-      console.log(tokens.access_token);
-
+      console.log(dataUser);
       const result = await axios
-        .post(`https://api.spotify.com/users/${userID}/playlists`, {
-          headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
-            "Content-Type": "application/json",
+        .post(
+          `https://api.spotify.com/v1/users/${userID}/playlists`,
+          {
+            name: dataUser.name,
+            public: dataUser.public,
+            collanorative: dataUser.collanorative,
+            description: dataUser.description
           },
-          data: JSON.stringify({
-            name: "New Playlist",
-            description: "New playlist description",
-            public: false,
-          }),
+          {
+            headers: {
+              Authorization: `Bearer ${tokens.access_token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          return response.data;
         })
-        .then((res) => console.log(res));
-
-      console.log(result);
+        .catch((error) => {
+          return error;
+        });
       return result;
     } catch (err) {
       console.log("criar playlist");
