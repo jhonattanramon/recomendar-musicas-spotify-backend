@@ -84,7 +84,8 @@ const spotifyController = {
   },
   playlist: async (req, res) => {
     try {
-      const playlist = await classReq.playlist();
+      console.log(req.headers.data);
+      const playlist = await classReq.playlist(req.headers.data);
       console.log(playlist);
       res.status(200).json(playlist);
     } catch (err) {

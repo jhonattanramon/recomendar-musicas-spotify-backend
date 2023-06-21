@@ -43,10 +43,10 @@ class Requests {
     }
   }
 
-  async playlist() {
+  async playlist(playlist_ID) {
     try {
       const result = await axios
-        .get(`${urlBaseSpotify}/playlists/37i9dQZF1DX0FOF1IUWK1W`, {
+        .get(`${urlBaseSpotify}/playlists/${playlist_ID}`, {
           headers: {
             Authorization: `Bearer ${tokens.access_token}`,
           },
@@ -231,7 +231,7 @@ class Requests {
             name: dataUser.name,
             public: dataUser.public,
             collaborative: dataUser.collaborative,
-            description: dataUser.description
+            description: dataUser.description,
           },
           {
             headers: {
@@ -241,18 +241,16 @@ class Requests {
           }
         )
         .then((response) => {
-          return{
+          return {
             response: response.data,
             state: true,
-          } 
-            
-
+          };
         })
         .catch((error) => {
-          return{
+          return {
             response: error,
             state: false,
-          } 
+          };
         });
       return result;
     } catch (err) {
@@ -260,40 +258,35 @@ class Requests {
     }
   }
 
-
-  async adicionarMusicasPlaylist(data){
-    try{
-      const { id, item } = data 
+  async adicionarMusicasPlaylist(data) {
+    try {
+      const { id, item } = data;
       console.log(id, item.uri);
-      console.log(tokens.access_token)
-      const res = await axios.post(`${urlBaseSpotify}/playlists/${id}/tracks`,
-      {
-          uris: [
-            item.uri
-          ],
-          position: 0,
-        },
-        {
-
-          headers:{
-            Authorization: `Bearer ${tokens.access_token}`,
-            "Content-Type": "application/json",
-            
+      console.log(tokens.access_token);
+      const res = await axios
+        .post(
+          `${urlBaseSpotify}/playlists/${id}/tracks`,
+          {
+            uris: [item.uri],
+            position: 0,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${tokens.access_token}`,
+              "Content-Type": "application/json",
+            },
           }
-        }
-      ).then( res => { 
-        return{
-         
+        )
+        .then((res) => {
+          return {
             res: res,
-            resItem: item
-          
-        }
-      } )
-      .catch( err => err)
+            resItem: item,
+          };
+        })
+        .catch((err) => err);
 
-      return res
-
-    }catch(err){
+      return res;
+    } catch (err) {
       console.log("add musicas");
     }
   }
