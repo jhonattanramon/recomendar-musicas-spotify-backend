@@ -224,14 +224,13 @@ class Requests {
 
   async criarPlaylist(dataUser) {
     try {
-      console.log(dataUser);
       const result = await axios
         .post(
           `https://api.spotify.com/v1/users/${userID}/playlists`,
           {
             name: dataUser.name,
             public: dataUser.public,
-            collanorative: dataUser.collanorative,
+            collaborative: dataUser.collaborative,
             description: dataUser.description
           },
           {
@@ -242,14 +241,60 @@ class Requests {
           }
         )
         .then((response) => {
-          return response.data;
+          return{
+            response: response.data,
+            state: true,
+          } 
+            
+
         })
         .catch((error) => {
-          return error;
+          return{
+            response: error,
+            state: false,
+          } 
         });
       return result;
     } catch (err) {
       console.log("criar playlist");
+    }
+  }
+
+
+  async adicionarMusicasPlaylist(data){
+    try{
+      const { id, item } = data 
+      console.log(id, item.uri);
+      console.log(tokens.access_token)
+      const res = await axios.post(`${urlBaseSpotify}/playlists/${id}/tracks`,
+      {
+          uris: [
+            item.uri
+          ],
+          position: 0,
+        },
+        {
+
+          headers:{
+            Authorization: `Bearer ${tokens.access_token}`,
+            "Content-Type": "application/json",
+            
+          }
+        }
+      ).then( res => { 
+        return{
+         
+            res: res,
+            resItem: item
+          
+        }
+      } )
+      .catch( err => err)
+
+      return res
+
+    }catch(err){
+      console.log("add musicas");
     }
   }
 }

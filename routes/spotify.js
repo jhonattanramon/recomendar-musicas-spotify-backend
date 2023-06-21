@@ -4,7 +4,9 @@ const spotifyController = require("../controllers/spotifyApiController");
 
 //autenticação
 router.route("/token").get((req, res) => spotifyController.token(req, res));
-router.route("/getuserid").get((req, res) => spotifyController.getUserID(req, res))
+router
+  .route("/getuserid")
+  .get((req, res) => spotifyController.getUserID(req, res));
 router.route("/auth").get((req, res) => spotifyController.auth(req, res));
 router
   .route("/authConfirmado")
@@ -53,10 +55,12 @@ router
   .route("/obtervariosartistas")
   .get((req, res) => spotifyController.obterVariosArtistas(req, res));
 
+router
+  .route("/criarplaylist")
+  .post((req, res) => spotifyController.criarPlaylist(req, res));
 
-  router
-    .route("/criarplaylist")
-    .post((req, res) => spotifyController.criarPlaylist(req, res));
+router
+  .route("/adicionarmusicas")
+  .post((req, res) => spotifyController.adionarMusicasPlaylist(req, res));
 
-    
 module.exports = router;

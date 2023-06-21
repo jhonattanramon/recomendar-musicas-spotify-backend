@@ -84,12 +84,24 @@ const spotifyController = {
   },
   playlist: async (req, res) => {
     try {
-      const classReq = new Requests();
       const playlist = await classReq.playlist();
       console.log(playlist);
       res.status(200).json(playlist);
     } catch (err) {
       console.log("playlist err");
+    }
+  },
+
+  adionarMusicasPlaylist: async (req, res) => {
+    try {
+      const result = await classReq.adicionarMusicasPlaylist({
+        id: req.body.data.id,
+        item: req.body.data.item,
+      });
+      
+      res.status(201).json(result.resItem);
+    } catch (err) {
+      console.log("adicionarMusicasPlaylist");
     }
   },
 
