@@ -11,4 +11,6 @@ const LoginController = require("../controllers/loginController");
    .route("/validadetoken")
    .post((req, res) => LoginController.validadeToken(req, res));
 
+   
+
 module.exports = router;

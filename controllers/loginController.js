@@ -81,22 +81,12 @@ const LoginController = {
 
   validadeToken: async (req, res) => {
     try {
-      console.log(req.headers);
       const { token } = req.headers;
+      console.log(token);
+     const teste = jwt.verify(token, process.env.JWTSECRET);
 
-      // const teste = jwt.verify();
+     console.log(teste);
 
-      if (token === tokenUser) {
-        res.status(200).send("token validado");
-      } else {
-        res.status(401).send("token invalidado");
-      }
-
-      // if (!token) {
-      //   res.status(401).send("token invalidado");
-      // } else {
-      //   res.status(200).send("token validado");
-      // }
     } catch (err) {
       res.status(500).json({ msg: "token sem validação" });
     }
