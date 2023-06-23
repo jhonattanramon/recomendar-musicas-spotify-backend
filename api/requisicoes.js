@@ -17,12 +17,6 @@ const getUserID = {
 
 const urlBaseSpotify = "https://api.spotify.com/v1";
 
-const listaDeArtistas = [
-  "5nP8x4uEFjAAmDzwOEc9b8",
-  "68PYmgkbRP1qZnEWOry7sB",
-  "5InVWl8IZB8zFAoNa5roKm",
-];
-
 class Requests {
   constructor(token) {
     this.token = token;
