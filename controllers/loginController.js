@@ -1,7 +1,11 @@
 const { Console, log } = require("console");
 const { RegisterUser: RegisterModel } = require("../models/RegisterUser");
+const jwt = require("jsonwebtoken");
+require("dotenv/config");
 
 const { Requests } = require("../api/requisicoes");
+
+let tokenUser;
 
 const LoginController = {
   login: async (req, res) => {
@@ -50,6 +54,51 @@ const LoginController = {
       //console.log(req.body);
     } catch (err) {
       res.status(500).json({ msg: "não encontrado", err });
+    }
+  },
+
+  tokenApp: async (req, res) => {
+    try {
+      //const { email, password } = req?.body?.data;
+
+      let token = jwt.sign(
+        {
+          foo: "bar",
+          exp: Math.floor(Date.now() / 1000) + 60 * 60,
+          data: {
+            email: "jhonattanramon@gmail.com",
+            password: "123ABC",
+          },
+        },
+        process.env.JWTSECRET
+      );
+      tokenUser = token;
+      res.status(200).json({ token: token });
+    } catch (err) {
+      res.status(500).send("token não gerado");
+    }
+  },
+
+  validadeToken: async (req, res) => {
+    try {
+      console.log(req.headers);
+      const { token } = req.headers;
+
+      // const teste = jwt.verify();
+
+      if (token === tokenUser) {
+        res.status(200).send("token validado");
+      } else {
+        res.status(401).send("token invalidado");
+      }
+
+      // if (!token) {
+      //   res.status(401).send("token invalidado");
+      // } else {
+      //   res.status(200).send("token validado");
+      // }
+    } catch (err) {
+      res.status(500).json({ msg: "token sem validação" });
     }
   },
 };

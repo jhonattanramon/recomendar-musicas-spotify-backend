@@ -4,14 +4,14 @@
   "description": "",
   "main": "servidor.js",
   "engines": {
-    "node":"18"
+    "node": "18"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server.auth": "nodemon ./api/spotify/auth.js",
     "server": "nodemon ./servidor.js",
     "build": "up src",
-    "start":"node servidor.js",
+    "start": "node servidor.js",
     "startAuth": "node api/spotify/auth.js"
   },
   "author": "",
@@ -24,6 +24,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jquery": "^3.6.4",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.0",
     "nodemon": "^2.0.22",
     "request": "^2.88.2",

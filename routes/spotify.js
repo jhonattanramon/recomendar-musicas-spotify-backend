@@ -69,4 +69,5 @@ router
   .route("/adicionarmusicas")
   .post((req, res) => spotifyController.adionarMusicasPlaylist(req, res));
 
+
 module.exports = router;
