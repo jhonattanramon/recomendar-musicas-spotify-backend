@@ -15,18 +15,24 @@ router
 
 //user
 router.route("/user").get((req, res) => spotifyController.user(req, res));
+
+router
+  .route("/playlistuser")
+  .get((req, res) => spotifyController.playlistUser(req, res));
 //##
 
 //playlist
 router
   .route("/playlist")
   .get((req, res) => spotifyController.playlist(req, res));
-router
-  .route("/playlistsEmDestaque")
-  .get((req, res) => spotifyController.playlistsEmDestaque(req, res));
-router
-  .route("/tracksplaylist")
-  .get((req, res) => spotifyController.tracksPlaylist(req, res));
+
+  router
+    .route("/playlistsEmDestaque")
+    .get((req, res) => spotifyController.playlistsEmDestaque(req, res));
+
+ router
+   .route("/tracksplaylist")
+   .get((req, res) => spotifyController.tracksPlaylist(req, res));
 //##
 
 //pesquisa

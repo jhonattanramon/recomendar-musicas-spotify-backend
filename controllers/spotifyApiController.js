@@ -99,7 +99,7 @@ const spotifyController = {
         id: req.body.data.id,
         item: req.body.data.item,
       });
-      
+
       res.status(201).json(result.resItem);
     } catch (err) {
       console.log("adicionarMusicasPlaylist");
@@ -206,6 +206,15 @@ const spotifyController = {
       res.status(200).json(result);
     } catch (err) {
       console.log("err");
+    }
+  },
+
+  playlistUser: async (req, res) => {
+    try {
+      const result = await classReq.playlistUser();
+      res.status(200).json(result);
+    } catch (err) {
+      console.log("playlist user");
     }
   },
 };

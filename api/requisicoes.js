@@ -290,5 +290,21 @@ class Requests {
       console.log("add musicas");
     }
   }
+
+  async playlistUser() {
+    try {
+      const res = await axios
+        .get(`${urlBaseSpotify}/users/${userID}/playlists`, {
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`,
+          },
+        })
+        .then((res) => res);
+      console.log(res);
+      return res;
+    } catch (err) {
+      console.log("error playlist user");
+    }
+  }
 }
 module.exports = { Requests, tokenTst, getUserID };
