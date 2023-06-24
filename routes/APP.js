@@ -28,7 +28,7 @@ router
   .put((req, res) => UserController.updateUser(req, res));
 
   router
-  .route("/login")
+  .route("/loginuser")
   .post( (req, res) => UserController.login(req, res))
 
 module.exports = router;
