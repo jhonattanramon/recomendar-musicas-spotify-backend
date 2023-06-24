@@ -255,8 +255,8 @@ class Requests {
   async adicionarMusicasPlaylist(data) {
     try {
       const { id, item } = data;
-      console.log(id, item.uri);
-      console.log(tokens.access_token);
+     // console.log(id, item.uri);
+     // console.log(tokens.access_token);
       const res = await axios
         .post(
           `${urlBaseSpotify}/playlists/${id}/tracks`,
@@ -288,13 +288,12 @@ class Requests {
   async playlistUser() {
     try {
       const res = await axios
-        .get(`${urlBaseSpotify}/users/${userID}/playlists`, {
+        .get(`${urlBaseSpotify}/users/${userID}/playlists?limit=50`, {
           headers: {
             Authorization: `Bearer ${tokens.access_token}`,
           },
         })
         .then((res) => res);
-      console.log(res);
       return res;
     } catch (err) {
       console.log("error playlist user");

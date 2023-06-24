@@ -9,13 +9,14 @@ const RegisterUserSchema = new Schema(
     type: String,
     required: true
   },
-  sobrenome: {
+  surname: {
     type: String,
     required: true
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique:true
   },
   password: {
     type: String,
@@ -29,7 +30,7 @@ const RegisterUserSchema = new Schema(
 })
 
 
-const RegisterUser = mongoose.model("RegisterUser", RegisterUserSchema)
+const RegisterUser = mongoose.model("users", RegisterUserSchema)
 
 
 

@@ -52,11 +52,7 @@ const spotifyController = {
   user: async (req, res) => {
     try {
       const inforUserSpotify = await classReq.user();
-      const checkToken = await classReq.checkToken();
-      res.status(200).json({
-        inforUserSpotify: inforUserSpotify,
-        checkToken: checkToken,
-      });
+      res.status(200).json(inforUserSpotify);
     } catch (err) {
       console.log("err");
     }
@@ -211,8 +207,10 @@ const spotifyController = {
 
   playlistUser: async (req, res) => {
     try {
-      const result = await classReq.playlistUser();
-      res.status(200).json(result);
+      const { data } = await classReq.playlistUser()
+      console.log(data);
+
+      res.status(200).json(data);
     } catch (err) {
       console.log("playlist user");
     }

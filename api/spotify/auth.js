@@ -18,7 +18,7 @@ var axios = require("axios").default;
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
 
 var userId;
 
@@ -60,7 +60,7 @@ app.get("/login", function (req, res) {
 
   // your application requests authorization
   var scope =
-    "user-read-private user-read-email playlist-modify-private playlist-modify-public playlist-read-collaborative";
+    "user-read-private user-read-email playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private";
   
   res.redirect(
     "https://accounts.spotify.com/authorize?" +
@@ -134,7 +134,7 @@ app.get("/callback", function (req, res) {
 
         (async function () {
           await axios
-            .get(`${baseURLDev}/apispotify/token`, {
+            .get(`${baseURlServer}/apispotify/token`, {
               headers: {
                 access_token: access_token,
                 refresh_token: refresh_token,
