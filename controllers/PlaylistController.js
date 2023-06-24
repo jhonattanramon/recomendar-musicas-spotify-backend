@@ -1,5 +1,5 @@
 const { RegisterUser: RegisterModel } = require("../models/RegisterUser");
-const { PlaylistModel } = require("../models/playlistModel")
+const { PlaylistModel } = require("../models/PlaylistModel")
 
 const { Requests } = require("../api/requisicoes");
 
