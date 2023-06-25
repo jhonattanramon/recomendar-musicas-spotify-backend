@@ -287,6 +287,7 @@ class Requests {
 
   async playlistUser() {
     try {
+      console.log(userID);
       const res = await axios
         .get(`${urlBaseSpotify}/users/${userID}/playlists?limit=50`, {
           headers: {

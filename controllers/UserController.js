@@ -1,10 +1,9 @@
 const { RegisterUser: RegisterModel } = require("../models/RegisterUser");
 
 const UserController = {
-  createUser: async (req, res) => {  
+  createUser: async (req, res) => {
     try {
-
-        const { name, surname, email, password } = req.body 
+      const { name, surname, email, password } = req.body;
 
       const dataUser = {
         name: name,
@@ -13,12 +12,18 @@ const UserController = {
         password: password,
       };
       const response = await RegisterModel.create(dataUser);
-      res
-        .status(201)
-        .json({
-             response,
-            msg: "user criado com sucesso!" });
+      console.log(response);
+      res.status(201).json({
+        menssage: "user criado com sucesso!",
+        stateRegiste: true
+      });
     } catch (err) {
+      if( err.code == 11000){
+        res.json({
+          menssage: "Email já cadastrado",
+          stateMenssage: true,
+        })
+      }
       console.log(err);
     }
   },
@@ -56,7 +61,7 @@ const UserController = {
       if (!user) {
         res.status(404).json({ msg: "serviço não encontrado" });
         return;
-      }
+}
 
       const deleteUser = await RegisterModel.findByIdAndDelete(id);
       res.status(200).json({ deleteUser, msg: "deletado com sucesso" });
@@ -88,7 +93,6 @@ const UserController = {
 
   login: async (req, res) => {
     try {
-
       const userDeBusca = await RegisterModel.find({
         email: req.body.email,
       });
@@ -97,30 +101,31 @@ const UserController = {
           userDeBusca[0].password != req.body.password &&
           userDeBusca[0].email == req.body.email
         ) {
-          res.status(401).json({ msg:"senha incorreta"})
-        } else if (
-          userDeBusca[0].password == req.body.password &&
-          userDeBusca[0].email != req.body.email
-        ) {
-          res.status(401).json({ msg: "email incorreto"});
+          res.json({
+            menssage: "senha incorreta",
+            stateErrorPassword: true,
+            stateMenssage: true,
+          });
         } else if (
           userDeBusca[0].password == req.body.password &&
           userDeBusca[0].email == req.body.email
         ) {
           res.json({ access: true });
         } else {
-          res.status(400).json({ access: "algo deu errado" });
+          res.json({ menssage: "algo deu errado" });
         }
       } else {
-        res.status(404).json({ menssage: "usuario não encontrado" });
-        console.log("nenhum usuario encontrado");
+        res.json({
+          menssage: "usuario não encontrado",
+          stateErrorEmail: true,
+          stateErrorPassword: true,
+          stateMenssage: true,
+        });
       }
     } catch (err) {
       res.status(500).json({ msg: "não encontrado", err });
     }
   },
 };
-
-
 
 module.exports = UserController;
