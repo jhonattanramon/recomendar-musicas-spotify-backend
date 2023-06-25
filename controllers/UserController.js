@@ -123,7 +123,7 @@ const UserController = {
         });
       }
     } catch (err) {
-      res.status(500).json({ msg: "não encontrado", err });
+      res.status(500).json({ menssage: "usuario não encontrado", err });
     }
   },
 };
