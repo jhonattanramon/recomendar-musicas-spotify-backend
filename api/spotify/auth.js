@@ -15,10 +15,12 @@ var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
 var { ClassToken } = require("../requisicoes");
 var axios = require("axios").default;
+const { SetToken } = require("../token")
+
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
 
 var userId;
 
@@ -106,7 +108,7 @@ app.get("/callback", function (req, res) {
       json: true,
     };
 
-    console.log(authOptions);
+    //console.log(authOptions);
 
     request.post(authOptions, function (error, response, body) {
       if (!error && response.statusCode === 200) {
@@ -121,7 +123,7 @@ app.get("/callback", function (req, res) {
 
         // use the access token to access the Spotify Web API
         request.get(options,  function (error, response, body) {
-          console.log("body", body);
+         // console.log("body", body);
         ( async () => {
             await axios.get(`${baseURlServer}/apispotify/getuserid`, {
               headers: {
@@ -133,16 +135,14 @@ app.get("/callback", function (req, res) {
         });
 
         (async function () {
-          await axios
-            .get(`${baseURlServer}/apispotify/token`, {
+         await axios
+            .get(`${baseURLDev}/apispotify/token`, {
               headers: {
-                access_token: access_token,
+                 access_token: access_token,
                 refresh_token: refresh_token,
-              },
+            },
             })
             .then((res) => res.data);
-
-         
         })();
 
         res.redirect(`${baseURLserverAuth}/confirmAuth.html`);

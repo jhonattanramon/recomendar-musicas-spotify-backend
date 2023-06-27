@@ -1,33 +1,39 @@
 const axios = require("axios").default;
 
-let tokens;
-let userID;
-
-const tokenTst = {
-  token: (token) => {
-    tokens = token;
-  },
-};
-
-const getUserID = {
-  id: (id) => {
-    userID = id;
-  },
-};
-
 const urlBaseSpotify = "https://api.spotify.com/v1";
 
-class Requests {
-  constructor(token) {
-    this.token = token;
+class User{
+  constructor(access_token_spf, refresh_token_spf, token_app){
+      this.access_token_spf = access_token_spf,
+      this.refresh_token_spf = refresh_token_spf
+      this.token_app = token_app
+  }   
+
+  setToken_spf({access_token, refresh_token }){
+    console.log(access_token, refresh_token);
+      this.access_token_spf = access_token
+      this.refresh_token_spf = refresh_token
+  }
+  setToken_app(token){
+      this.token_app = token
   }
 
+  logout(){
+    this.access_token_spf = null,
+    this.refresh_token_spf = null,
+    this.token_app = null
+  }
+}
+
+
+
+class Requests extends User {
   async user() {
     try {
       const result = await axios
         .get("https://api.spotify.com/v1/me", {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
+            Authorization: `Bearer ${this.token_spf}`,
           },
         })
         .then((res) => res.data);
@@ -89,12 +95,13 @@ class Requests {
 
   async playlistsEmDestaque() {
     try {
+      console.log(this.checkToke())
       const result = await axios
         .get(
           `${urlBaseSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`,
           {
             headers: {
-              Authorization: `Bearer ${tokens.access_token}`,
+              Authorization: `Bearer ${this.access_token_spf}`,
             },
           }
         )
@@ -229,7 +236,7 @@ class Requests {
           },
           {
             headers: {
-              Authorization: `Bearer ${tokens.access_token}`,
+              Authorization: `Bearer ${this.access_token_spf}`,
               "Content-Type": "application/json",
             },
           }
@@ -301,4 +308,14 @@ class Requests {
     }
   }
 }
-module.exports = { Requests, tokenTst, getUserID };
+
+const testeToken = (token) => {
+  console.log(token);
+  const UserTeste = new Requests()
+  UserTeste.setToken_spf(token)
+  UserTeste.playlistsEmDestaque()
+  
+}
+
+
+module.exports = { Requests,User, testeToken };

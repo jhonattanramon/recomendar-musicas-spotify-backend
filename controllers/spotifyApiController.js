@@ -1,12 +1,8 @@
-const { Console, log } = require("console");
-const { json } = require("express");
-const { RegisterUser: RegisterModel } = require("../models/RegisterUser");
-const axios = require("axios").default;
-var $ = require("jquery");
-require("dotenv/config");
-const { Requests, tokenTst, getUserID } = require("../api/requisicoes");
 
-const classReq = new Requests();
+require("dotenv/config");
+const { Requests } = require("../api/requisicoes");
+
+const classReq = new Requests()
 
 const spotifyController = {
   //autenticação
@@ -26,14 +22,12 @@ const spotifyController = {
 
   token: async (req, res) => {
     try {
-      const { access_token, refresh_token } = req.headers;
+      console.log("token");
+      classReq.setToken_spf({
+        access_token: req.headers.access_token,
+        refresh_token: req.headers.refresh_token
+      })
 
-      tokenTst.token({
-        access_token: access_token,
-        refresh_token: refresh_token,
-      });
-
-      res.status(200).json({ msg: "token chegou" });
     } catch (err) {
       console.log("error token");
     }
@@ -41,9 +35,8 @@ const spotifyController = {
 
   getUserID: async (req, res) => {
     try {
-      const { id } = req.headers;
       console.log(id);
-      getUserID.id(id);
+      classReq.setToken_app(req.headers.access_token)
     } catch (err) {
       console.log("erro get id");
     }
@@ -71,6 +64,7 @@ const spotifyController = {
 
   playlistsEmDestaque: async (req, res) => {
     try {
+      console.log(classReq);
       const destaquesPlaylists = await classReq.playlistsEmDestaque();
       res.status(200).json(destaquesPlaylists);
     } catch (err) {
