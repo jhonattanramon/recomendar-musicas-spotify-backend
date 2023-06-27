@@ -62,7 +62,7 @@ app.get("/login", function (req, res) {
 
   // your application requests authorization
   var scope =
-    "user-read-private user-read-email playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private";
+    "user-read-private user-read-email playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private ugc-image-upload";
   
   res.redirect(
     "https://accounts.spotify.com/authorize?" +
@@ -125,7 +125,7 @@ app.get("/callback", function (req, res) {
         request.get(options,  function (error, response, body) {
          // console.log("body", body);
         ( async () => {
-            await axios.get(`${baseURlServer}/apispotify/getuserid`, {
+            await axios.get(`${baseURLDev}/apispotify/getuserid`, {
               headers: {
                 id: body.id,
               },

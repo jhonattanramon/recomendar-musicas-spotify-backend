@@ -31,15 +31,16 @@ class Requests extends User {
   async user() {
     try {
       const result = await axios
-        .get("https://api.spotify.com/v1/me", {
+        .get(`${urlBaseSpotify}/me`, {
           headers: {
-            Authorization: `Bearer ${this.token_spf}`,
+            Authorization: `Bearer ${this.access_token_spf}`,
           },
         })
-        .then((res) => res.data);
+        .then((res) => res);
+
       return result;
     } catch (err) {
-      console.log("erros");
+      console.log("erros user", err);
     }
   }
 
@@ -48,7 +49,7 @@ class Requests extends User {
       const result = await axios
         .get(`${urlBaseSpotify}/playlists/${playlist_ID}`, {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
+            Authorization: `Bearer ${this.access_token_spf}`,
           },
         })
         .then((res) => res.data);
@@ -65,7 +66,7 @@ class Requests extends User {
           `https://api.spotify.com/v1/artists?ids=${listaDeArtistas[0]},${listaDeArtistas[1]}`,
           {
             headers: {
-              Authorization: `Bearer ${tokens.access_token}`,
+              Authorization: `Bearer ${this.access_token_spf}`,
             },
           }
         )
@@ -82,7 +83,7 @@ class Requests extends User {
       const result = await axios
         .get(`${urlBaseSpotify}/recommendations/available-genre-seeds`, {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
+            Authorization: `Bearer ${this.access_token_spf}`,
           },
         })
         .then((res) => res.data);
@@ -95,7 +96,6 @@ class Requests extends User {
 
   async playlistsEmDestaque() {
     try {
-      console.log(this.checkToke())
       const result = await axios
         .get(
           `${urlBaseSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`,
@@ -117,7 +117,7 @@ class Requests extends User {
       const result = await axios
         .get(`${url}`, {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
+            Authorization: `Bearer ${this.access_token_spf}`,
           },
         })
         .then((res) => res.data);
@@ -132,7 +132,7 @@ class Requests extends User {
       const result = await axios
         .get(`${urlBaseSpotify}/artists/${id}/top-tracks?market=BR`, {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
+            Authorization: `Bearer ${this.access_token_spf}`,
           },
         })
         .then((res) => res.data);
@@ -148,7 +148,7 @@ class Requests extends User {
       const result = await axios
         .get(`${url}`, {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
+            Authorization: `Bearer ${this.access_token_spf}`,
           },
         })
         .then((res) => res);
@@ -162,7 +162,7 @@ class Requests extends User {
 
   async checkToken() {
     try {
-      if (tokens.access_token) {
+      if (this.access_token_spf) {
         return tokens;
       }
     } catch (err) {
@@ -178,7 +178,7 @@ class Requests extends User {
             `${urlBaseSpotify}/search?q=remaster=genre:${genre}&type=${type}&limit=50`,
             {
               headers: {
-                Authorization: `Bearer ${tokens.access_token}`,
+                Authorization: `Bearer ${this.access_token_spf}`,
               },
             }
           )
@@ -198,7 +198,7 @@ class Requests extends User {
       const result = await axios
         .get(`${urlBaseSpotify}/search?q=${nameTrack}&type=track`, {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
+            Authorization: `Bearer ${this.access_token_spf}`,
           },
         })
         .then((res) => res.data);
@@ -214,7 +214,7 @@ class Requests extends User {
 
       const { data } = await axios.get(url, {
         headers: {
-          Authorization: `Bearer ${tokens.access_token}`,
+          Authorization: `Bearer ${this.access_token_spf}`,
         },
       });
       return data;
@@ -227,7 +227,7 @@ class Requests extends User {
     try {
       const result = await axios
         .post(
-          `https://api.spotify.com/v1/users/${userID}/playlists`,
+          `https://api.spotify.com/v1/users/${this.token_app}/playlists`,
           {
             name: dataUser.name,
             public: dataUser.public,
@@ -262,8 +262,6 @@ class Requests extends User {
   async adicionarMusicasPlaylist(data) {
     try {
       const { id, item } = data;
-     // console.log(id, item.uri);
-     // console.log(tokens.access_token);
       const res = await axios
         .post(
           `${urlBaseSpotify}/playlists/${id}/tracks`,
@@ -273,7 +271,7 @@ class Requests extends User {
           },
           {
             headers: {
-              Authorization: `Bearer ${tokens.access_token}`,
+              Authorization: `Bearer ${this.access_token_spf}`,
               "Content-Type": "application/json",
             },
           }
@@ -294,11 +292,11 @@ class Requests extends User {
 
   async playlistUser() {
     try {
-      console.log(userID);
+      console.log(this.token_app);
       const res = await axios
-        .get(`${urlBaseSpotify}/users/${userID}/playlists?limit=50`, {
+        .get(`${urlBaseSpotify}/users/${this.token_app}/playlists?limit=50`, {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
+            Authorization: `Bearer ${this.access_token_spf}`,
           },
         })
         .then((res) => res);

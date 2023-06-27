@@ -9,7 +9,7 @@ const spotifyController = {
   auth: async (req, res, next) => {
     try {
       if (req.headers.authorization !== "undefined") {
-        tokenTst.token(req.headers.authorization);
+        classReq.token(req.headers.authorization);
         res.status(200).json({ msg: "ok" });
       } else {
         console.log("não autorizado");
@@ -35,8 +35,7 @@ const spotifyController = {
 
   getUserID: async (req, res) => {
     try {
-      console.log(id);
-      classReq.setToken_app(req.headers.access_token)
+      classReq.setToken_app(req.headers.id)
     } catch (err) {
       console.log("erro get id");
     }
@@ -44,7 +43,7 @@ const spotifyController = {
 
   user: async (req, res) => {
     try {
-      const inforUserSpotify = await classReq.user();
+      const {data: inforUserSpotify} = await classReq.user();
       res.status(200).json(inforUserSpotify);
     } catch (err) {
       console.log("err");
@@ -76,7 +75,6 @@ const spotifyController = {
     try {
       console.log(req.headers.data);
       const playlist = await classReq.playlist(req.headers.data);
-      console.log(playlist);
       res.status(200).json(playlist);
     } catch (err) {
       console.log("playlist err");
