@@ -6,18 +6,19 @@ const { Requests } = require("../api/requisicoes");
 const PlaylistController = {
   createPlaylist: async (req, res) => {
     try {
-      const { name, public, description, collaborative } = req.body;
+      const { name, public, description, collaborative, image } = req.body;
         const dataPlaylist = {
             name: name,
             description: description,
             public: public,
-            collaborative: collaborative
+            collaborative: collaborative,
+            image: image
         }
       const playlistCriada = await PlaylistModel.create(dataPlaylist)
-      console.log(playlistCriada);
-      res.status(200).json(playlistCriada)
-        console.log(name, description, public, collaborative);
-
+      res.status(200).json({
+        response: playlistCriada,
+        state: true
+      })
     } catch (err) {
       console.log("erro criar playlist app");
     }

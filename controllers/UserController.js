@@ -93,6 +93,7 @@ const UserController = {
 
   login: async (req, res) => {
     try {
+      console.log("login");
       const userDeBusca = await RegisterModel.find({
         email: req.body.email,
       });

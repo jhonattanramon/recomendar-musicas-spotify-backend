@@ -9,7 +9,7 @@ const PlaylistSchema = new Schema({
   },
   public: {
     type: Boolean,
-  },
+},
   collaborative: {
     type: Boolean
   },

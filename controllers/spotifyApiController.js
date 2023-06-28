@@ -68,7 +68,7 @@ const spotifyController = {
       res.status(200).json(destaquesPlaylists);
     } catch (err) {
       res.status(500).json(err);
-      console.log();
+      console.log("criarPlaylist");
     }
   },
   playlist: async (req, res) => {
