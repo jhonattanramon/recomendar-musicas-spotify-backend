@@ -61,7 +61,7 @@ app.get("/login", function (req, res) {
   // your application requests authorization
   var scope =
     "user-read-private user-read-email playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private";
-  
+
   res.redirect(
     "https://accounts.spotify.com/authorize?" +
       querystring.stringify({
@@ -120,16 +120,16 @@ app.get("/callback", function (req, res) {
         };
 
         // use the access token to access the Spotify Web API
-        request.get(options,  function (error, response, body) {
+        request.get(options, function (error, response, body) {
           console.log("body", body);
-        ( async () => {
+          (async () => {
             await axios.get(`${baseURlServer}/apispotify/getuserid`, {
               headers: {
                 id: body.id,
               },
             }),
               then((res) => res);
-        })()
+          })();
         });
 
         (async function () {
@@ -141,8 +141,6 @@ app.get("/callback", function (req, res) {
               },
             })
             .then((res) => res.data);
-
-         
         })();
 
         res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
