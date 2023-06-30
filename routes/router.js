@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const appRouter = require('./App')
+const appRouter = require("./appRouters")
 
 router.use('/',  appRouter)
 
