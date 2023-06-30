@@ -292,9 +292,8 @@ class Requests extends User {
 
   async playlistUser() {
     try {
-      console.log(this.token_app);
       const res = await axios
-        .get(`${urlBaseSpotify}/users/${this.token_app}/playlists?limit=50`, {
+        .get(`${urlBaseSpotify}/me/playlists?limit=50`, {
           headers: {
             Authorization: `Bearer ${this.access_token_spf}`,
           },
