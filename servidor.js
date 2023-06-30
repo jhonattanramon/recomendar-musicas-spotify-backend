@@ -24,7 +24,7 @@ const conn = require('./db/conn')
 conn()
 
 const routes = require('./routes/router')
-const routesSpotify = require('./routes/spotify')
+const routesSpotify = require('./routes/spotifyRouters')
 
 
 app.use('/api', routes)
