@@ -1,7 +1,7 @@
 const { RegisterUser: RegisterModel } = require("../models/RegisterUser");
 const { PlaylistModel } = require("../models/PlaylistModel")
 
-const { Requests } = require("../api/requisicoes");
+const { Requests } = require("../api/Requisicoes");
 
 const PlaylistController = {
   createPlaylist: async (req, res) => {
@@ -25,7 +25,19 @@ const PlaylistController = {
   },
 
   getAllPlaylists: async ( req, res ) => {
-    
+    try{
+      const playlists = await PlaylistModel.find()
+      res.status(200).json({
+              items: playlists,
+              state: true
+            })
+    }catch(err){
+      res.status(500).json({
+              response: err,
+              state: false
+            })
+    }
+      
   }
  
 };

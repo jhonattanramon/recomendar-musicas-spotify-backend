@@ -1,14 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const path = require('path');
-const cors = require('cors');
+const path = require("path");
+const cors = require("cors");
 
-require("dotenv").config()
+require("dotenv").config();
 
-const app = express()
+const app = express();
 const port = 3004;
-
 
 app.use(express.json());
 app.use(
@@ -17,24 +16,16 @@ app.use(
   })
 );
 
-// db connection 
+// db connection
 
-const conn = require('./db/conn')
+const conn = require("./db/conn");
 
-conn()
+conn();
 
-const routes = require('./routes/router')
-const routesSpotify = require('./routes/spotifyRouters')
+const routes = require("./routes/router");
 
+app.use("/", routes);
 
-app.use('/api', routes)
-app.use('/apispotify', routesSpotify)
-
-
-
-
-app.listen(port, (req, res ) => {
+app.listen(port, (req, res) => {
   console.log(`porta:${port} servidor online`);
-})
-
-
+});

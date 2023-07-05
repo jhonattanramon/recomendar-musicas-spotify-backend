@@ -1,6 +1,6 @@
 
 require("dotenv/config");
-const { Requests } = require("../api/requisicoes");
+const { Requests } = require("../api/Requisicoes");
 
 const classReq = new Requests()
 

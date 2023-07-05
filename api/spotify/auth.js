@@ -13,14 +13,12 @@ var request = require("request"); // "Request" library
 var cors = require("cors");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
-var { ClassToken } = require("../requisicoes");
 var axios = require("axios").default;
-const { SetToken } = require("../token")
 
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
 
 var baseURlServer = "https://appnative-backend.onrender.com";
 var baseURLDev = "http://localhost:3004";
@@ -123,7 +121,7 @@ app.get("/callback", function (req, res) {
         request.get(options, function (error, response, body) {
           console.log("body", body);
           (async () => {
-            await axios.get(`${baseURlServer}/apispotify/getuserid`, {
+            await axios.get(`${baseURLDev}/apispotify/getuserid`, {
               headers: {
                 id: body.id,
               },
@@ -134,7 +132,7 @@ app.get("/callback", function (req, res) {
 
         (async function () {
          await axios
-            .get(`${baseURlServer}/apispotify/token`, {
+            .get(`${baseURLDev}/apispotify/token`, {
               headers: {
                  access_token: access_token,
                 refresh_token: refresh_token,

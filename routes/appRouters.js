@@ -8,6 +8,10 @@ router
   .post((req, res) => PlaylistController.createPlaylist(req, res));
 
 router
+  .route("/playlistuser")
+  .get((req, res) => PlaylistController.getAllPlaylists(req, res));
+
+router
   .route("/createuser")
   .post((req, res) => UserController.createUser(req, res));
 
@@ -16,19 +20,17 @@ router
   .delete((req, res) => UserController.deleteUser(req, res));
 
 router
-.route("/getAllUsers")
-.get((req, res) => UserController.getAllUsers(req, res));
+  .route("/getAllUsers")
+  .get((req, res) => UserController.getAllUsers(req, res));
 
 router
-.route("/getuser/:id")
-.get((req, res) => UserController.getUser(req, res));
+  .route("/getuser/:id")
+  .get((req, res) => UserController.getUser(req, res));
 
 router
   .route("/updateuser/:id")
   .put((req, res) => UserController.updateUser(req, res));
 
-  router
-  .route("/loginuser")
-  .post( (req, res) => UserController.login(req, res))
+router.route("/loginuser").post((req, res) => UserController.login(req, res));
 
 module.exports = router;

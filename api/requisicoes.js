@@ -1,31 +1,8 @@
+const User = require("./User");
+
 const axios = require("axios").default;
 
 const urlBaseSpotify = "https://api.spotify.com/v1";
-
-class User{
-  constructor(access_token_spf, refresh_token_spf, token_app){
-      this.access_token_spf = access_token_spf,
-      this.refresh_token_spf = refresh_token_spf
-      this.token_app = token_app
-  }   
-
-  setToken_spf({access_token, refresh_token }){
-    console.log(access_token, refresh_token);
-      this.access_token_spf = access_token
-      this.refresh_token_spf = refresh_token
-  }
-  setToken_app(token){
-      this.token_app = token
-  }
-
-  logout(){
-    this.access_token_spf = null,
-    this.refresh_token_spf = null,
-    this.token_app = null
-  }
-}
-
-
 
 class Requests extends User {
   async user() {

@@ -16,8 +16,9 @@ const PlaylistSchema = new Schema({
   description:{
     type: String
   },
-  image:{
-    type: String
+  images:{
+    type: [],
+    default: [ { url: "https://i.pinimg.com/564x/08/54/fd/0854fde5bae64e078a68d37b9afec716.jpg" }]
   }
   
  
