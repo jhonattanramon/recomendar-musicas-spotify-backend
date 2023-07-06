@@ -121,7 +121,7 @@ app.get("/callback", function (req, res) {
         request.get(options, function (error, response, body) {
           console.log("body", body);
           (async () => {
-            await axios.get(`${baseURLDev}/apispotify/getuserid`, {
+            await axios.get(`${baseURLDev}/api/getuserid`, {
               headers: {
                 id: body.id,
               },
@@ -132,7 +132,7 @@ app.get("/callback", function (req, res) {
 
         (async function () {
          await axios
-            .get(`${baseURLDev}/apispotify/token`, {
+            .get(`${baseURLDev}/api/token`, {
               headers: {
                  access_token: access_token,
                 refresh_token: refresh_token,

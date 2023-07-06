@@ -1,9 +1,10 @@
 const router = require("express").Router();
 
-const spotifyController = require("../controllers/spotifyApiController");
+const ClassControll = require("../controllers/spotifyApiController");
+const spotifyController = new ClassControll()
 
 //autenticação
-router.route("/token").get((req, res) => spotifyController.token(req, res));
+router.route("/token").get((req, res) => spotifyController.token());
 router
   .route("/getuserid")
   .get((req, res) => spotifyController.getUserID(req, res));
@@ -15,7 +16,6 @@ router
 
 //user
 router.route("/user").get((req, res) => spotifyController.user(req, res));
-
 router
   .route("/playlistuser")
   .get((req, res) => spotifyController.playlistUser(req, res));
