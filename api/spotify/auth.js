@@ -14,16 +14,17 @@ var cors = require("cors");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
 var axios = require("axios").default;
+const { formToJSON } = require("axios");
 
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
 var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
 
-var baseURlServer = "https://appnative-backend.onrender.com";
-var baseURLDev = "http://localhost:3004";
-var basURLDevAuth = "http://localhost:8887";
-var baseURLserverAuth = "https://appnative-backend-auth.onrender.com";
+const baseURlServer = "https://appnative-backend.onrender.com";
+const baseURLDev = "http://localhost:3004";
+const basURLDevAuth = "http://localhost:8887";
+const baseURLserverAuth = "https://appnative-backend-auth.onrender.com";
 
 /**
  * Generates a random string containing numbers and letters
@@ -121,12 +122,14 @@ app.get("/callback", function (req, res) {
         request.get(options, function (error, response, body) {
           console.log("body", body);
           (async () => {
-            await axios.get(`${baseURLDev}/api/getuserid`, {
+            await axios.get(`${baseURLDev}/api/setdatauser`, {
               headers: {
-                id: body.id,
+                data: JSON.stringify(body),
               },
             }),
               then((res) => res);
+
+            
           })();
         });
 
@@ -135,7 +138,7 @@ app.get("/callback", function (req, res) {
             .get(`${baseURLDev}/api/token`, {
               headers: {
                  access_token: access_token,
-                refresh_token: refresh_token,
+                 refresh_token: refresh_token,
             },
             })
             .then((res) => res.data);

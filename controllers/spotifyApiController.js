@@ -1,11 +1,11 @@
 require("dotenv/config");
-const axios = require("axios")
+const User = require("../api/User");
+const axios = require("axios").default;
 const urlBaseSpotify = "https://api.spotify.com/v1";
-const User  = require("../api/User");
 
-class spotifyController extends User  {
+class spotifyController extends User {
   //autenticação
-  async auth(req, res, next)  {
+  async auth(req, res, next) {
     try {
       if (req.headers.authorization !== "undefined") {
         classReq.token(req.headers.authorization);
@@ -30,25 +30,24 @@ class spotifyController extends User  {
     }
   }
 
-  async setUserID (req, res) {
+  async data(req, res) {
     try {
-      this.id(req.headers.id);
+      this.setDataUser({ data: req.headers.data });
     } catch (err) {
       console.log("erro get id");
     }
   }
 
-  async user (req, res) {
+  async inforsUser(req, res) {
     try {
-      const result = await axios
+      const {data: inforsUser} = await axios
         .get(`${urlBaseSpotify}/me`, {
           headers: {
             Authorization: `Bearer ${this.access_token}`,
           },
         })
         .then((res) => res);
-
-      res.status(200).jso(result);
+      res.status(200).json(inforsUser);
     } catch (err) {
       console.log("err");
     }
@@ -56,37 +55,32 @@ class spotifyController extends User  {
 
   //playlist
 
-  async criarPlaylist(req, res)  {
+  async createPlaylist(req, res) {
     try {
-      const result = await axios
-        .post(
-          `https://api.spotify.com/v1/users/${this.id}/playlists`,
+      const { name, publicList, collaborative, description } = req.body 
+      const {data: playlist} = await axios.post(`${urlBaseSpotify}/users/${this.dataUser.id}/playlists`,
           {
-            name: dataUser.name,
-            public: dataUser.public,
-            collaborative: dataUser.collaborative,
-            description: dataUser.description,
+            name: name,
+            public: publicList,
+            description: description,
+            collaborative: collaborative,
           },
           {
             headers: {
               Authorization: `Bearer ${this.access_token}`,
-              "Content-Type": "application/json",
+              "Content-Type": "application/json"
             },
           }
         )
-        .then((response) => {
-          return {
-            response: response.data,
-            state: true,
-          };
-        })
-      res.status(200).json(result);
+        .then((res) => res)
+        .catch((err) => err);
+      res.status(200).json({...playlist, create:true});
     } catch (err) {
-      res.status(500).json(err);
+       res.status(500).json(err);
     }
   }
 
-  async  playlistsEmDestaque  (req, res) {
+  async playlistsEmDestaque(req, res) {
     try {
       const destaquesPlaylists = await axios
         .get(
@@ -104,7 +98,7 @@ class spotifyController extends User  {
       console.log("criarPlaylist");
     }
   }
-  async playlist (req, res)  {
+  async playlist(req, res) {
     try {
       const playlist = await axios
         .get(`${urlBaseSpotify}/playlists/${req.headers.playlist_ID}`, {
@@ -119,9 +113,9 @@ class spotifyController extends User  {
     }
   }
 
-  async adionarMusicasPlaylist  (req, res)  {
+  async adionarMusicasPlaylist(req, res) {
     try {
-      const { id, item } = req.body.data
+      const { id, item } = req.body.data;
       const res = await axios
         .post(
           `${urlBaseSpotify}/playlists/${id}/tracks`,
@@ -141,7 +135,7 @@ class spotifyController extends User  {
             res: res,
             resItem: item,
           };
-        })
+        });
 
       res.status(201).json(res.resItem);
     } catch (err) {
@@ -150,16 +144,16 @@ class spotifyController extends User  {
   }
   //generos
 
-  async obterGeneros  (req, res) {
+  async obterGeneros(req, res) {
     try {
       const generos = await axios
-      .get(`${urlBaseSpotify}/recommendations/available-genre-seeds`, {
-        headers: {
-          Authorization: `Bearer ${this.access_token}`,
-        },
-      })
-      .then((res) => res.data);
-    res.status(200).json(generos);
+        .get(`${urlBaseSpotify}/recommendations/available-genre-seeds`, {
+          headers: {
+            Authorization: `Bearer ${this.access_token}`,
+          },
+        })
+        .then((res) => res.data);
+      res.status(200).json(generos);
     } catch (err) {
       console.log("obterGeneros");
     }
@@ -167,7 +161,7 @@ class spotifyController extends User  {
 
   //tracks
 
-  async tracksPlaylist  (req, res)  {
+  async tracksPlaylist(req, res) {
     try {
       const tracks = await axios
         .get(`${req.headers.url}`, {
@@ -181,37 +175,39 @@ class spotifyController extends User  {
       console.log("tracks err");
     }
   }
-  async track  (req, res){
+  async track(req, res) {
     try {
-      const {data} = await axios
-      .get(`${req.headers.hreftrack}`, {
-        headers: {
-          Authorization: `Bearer ${this.access_token}`,
-        },
-      })
-      .then((res) => res);    
+      const { data } = await axios
+        .get(`${req.headers.hreftrack}`, {
+          headers: {
+            Authorization: `Bearer ${this.access_token}`,
+          },
+        })
+        .then((res) => res);
       res.status(200).json(data);
-
     } catch (err) {
       console.log("err track");
     }
   }
   //pesquisa
 
-  async  pesquisa (req, res) {
+  async pesquisa(req, res) {
     try {
-      const { data } = await axios.get(`${urlBaseSpotify}/search?q=remaster:genre=pagode&type=artist`, {
-        headers: {
-          Authorization: `Bearer ${this.access_token}`,
-        },
-      });
+      const { data } = await axios.get(
+        `${urlBaseSpotify}/search?q=remaster:genre=pagode&type=artist`,
+        {
+          headers: {
+            Authorization: `Bearer ${this.access_token}`,
+          },
+        }
+      );
       res.status(200).json(data);
     } catch (err) {
       console.log("err pesquisa");
     }
   }
 
-  async pesquisaTrack  (req, res) {
+  async pesquisaTrack(req, res) {
     try {
       const result = await axios
         .get(`${urlBaseSpotify}/search?q=${req.headers.nameTrack}&type=track`, {
@@ -226,7 +222,7 @@ class spotifyController extends User  {
     }
   }
 
-  async pesquisaGenere (req, res)  {
+  async pesquisaGenere(req, res) {
     try {
       const { data } = await axios
         .get(
@@ -244,7 +240,7 @@ class spotifyController extends User  {
     }
   }
 
-  async playlistUser  (req, res) {
+  async playlistUser(req, res) {
     try {
       const { data } = await axios
         .get(`${urlBaseSpotify}/me/playlists?limit=50`, {
@@ -259,6 +255,6 @@ class spotifyController extends User  {
       console.log("playlist user");
     }
   }
-};
+}
 
 module.exports = spotifyController;
