@@ -19,7 +19,7 @@ const { formToJSON } = require("axios");
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
 
 const baseURlServer = "https://appnative-backend.onrender.com";
 const baseURLDev = "http://localhost:3004";
@@ -122,7 +122,7 @@ app.get("/callback", function (req, res) {
         request.get(options, function (error, response, body) {
           console.log("body", body);
           (async () => {
-            await axios.get(`${baseURLDev}/api/setdatauser`, {
+            await axios.get(`${baseURlServer}/api/setdatauser`, {
               headers: {
                 data: JSON.stringify(body),
               },
@@ -135,7 +135,7 @@ app.get("/callback", function (req, res) {
 
         (async function () {
          await axios
-            .get(`${baseURLDev}/api/token`, {
+            .get(`${baseURlServer}/api/token`, {
               headers: {
                  access_token: access_token,
                  refresh_token: refresh_token,
