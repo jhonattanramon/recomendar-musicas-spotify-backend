@@ -384,12 +384,7 @@ class spotifyController extends User {
     }
 
    if (state === null || state !== storedState ) {
-     res.redirect(
-       "/#" +
-         querystring.stringify({
-           error: "state_mismatch",
-         })
-     );
+     res.status(200).json({ msg: "invalid state" })
   } else {
       redirection()
   //   res.clearCookie(stateKey);
