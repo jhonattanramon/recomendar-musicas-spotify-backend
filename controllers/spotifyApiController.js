@@ -315,7 +315,7 @@ class spotifyController extends User {
       var authOptions = {
         url: "https://accounts.spotify.com/api/token",
         form: {
-          code: code || testeCode,
+          code:testeCode || code,
           redirect_uri: redirect_uri,
           grant_type: "authorization_code",
         },
