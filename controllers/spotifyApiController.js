@@ -303,7 +303,7 @@ class spotifyController extends User {
 
   }
   async callback(req, res) {
-    const testeCode = req.headers.code || null
+    const testeCode = req.headers.code 
 
       const code = req.query.code || null;
       const state = req.query.state || null;
@@ -378,7 +378,7 @@ class spotifyController extends User {
       });
     }
 
-    if( testeCode !== null){
+    if( testeCode !== undefined){
       redirection(testeCode)
       return
     }
