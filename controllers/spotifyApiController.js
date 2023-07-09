@@ -289,7 +289,8 @@ class spotifyController extends User {
     // your application requests authorization
     const scope =
       "user-read-private user-read-email playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private ugc-image-upload";
-    window.postMessage("teste")
+// Envie uma mensagem com um valor
+window.ReactNativeWebView.postMessage(JSON.stringify({ value: 'Hello from WebView!' }));
     res.redirect(
       "https://accounts.spotify.com/authorize?" +
         querystring.stringify({
