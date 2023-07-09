@@ -369,12 +369,13 @@ class spotifyController extends User {
           res.status(200).json({ state: true})
           //res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
         } else {
-          res.redirect(
-            "/#" +
-              querystring.stringify({
-                error: "invalid_token",
-              })
-          );
+          res.status(200).json({ state: false})
+          // res.redirect(
+          //   "/#" +
+          //     querystring.stringify({
+          //       error: "invalid_token",
+          //     })
+          // );
         }
       });
     }
