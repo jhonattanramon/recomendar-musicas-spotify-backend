@@ -7,7 +7,7 @@ const request = require("request");
 
 const client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 const client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
-const  redirect_uri = process.env.REDIRECT_URI_V2; // Your redirect uri
+const  redirect_uri = process.env.REDIRECT_URI_NEW_PRODUCT; // Your redirect uri
 
 const baseURlServer = "https://appnative-backend.onrender.com";
 const baseURLDev = "http://localhost:3004";
@@ -300,10 +300,8 @@ class spotifyController extends User {
           state: state,
         })
     );
-  }
 
-  
-  
+  }
   async callback(req, res) {
       console.log("callback");
       const  code = req.query.code || null;
@@ -351,7 +349,7 @@ class spotifyController extends User {
         request.get(options, function (error, response, body) {
           console.log("body", body);
           (async () => {
-            await axios.get(`${baseURLDev}/api/setdatauser`, {
+            await axios.get(`${baseURlServer}/api/setdatauser`, {
               headers: {
                 data: JSON.stringify(body),
               },
@@ -364,7 +362,7 @@ class spotifyController extends User {
 
         (async function () {
          await axios
-            .get(`${baseURLDev}/api/token`, {
+            .get(`${baseURlServer}/api/token`, {
               headers: {
                  access_token: access_token,
                  refresh_token: refresh_token,
@@ -372,8 +370,8 @@ class spotifyController extends User {
             })
             .then((res) => res.data);
         })();
-
-        res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
+        res.status(200).json({ state: true})
+        //res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
       } else {
         res.redirect(
           "/#" +
