@@ -365,9 +365,7 @@ class spotifyController extends User {
               })
               .then((res) => res.data);
           })();
-        //  window.ReactNativeWebView.postMessage(JSON.stringify({value: true}))
           res.status(200).json({ state: true})
-          //res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
         } else {
           res.status(200).json({ state: false})
           // res.redirect(
@@ -382,6 +380,7 @@ class spotifyController extends User {
 
     if( testeCode !== null){
       redirection(testeCode)
+      return
     }
 
    if (state === null || state !== storedState ) {
