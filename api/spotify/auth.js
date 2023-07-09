@@ -14,12 +14,11 @@ var cors = require("cors");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
 var axios = require("axios").default;
-const { formToJSON } = require("axios");
 
 
 var client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 var client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
-var redirect_uri = process.env.REDIRECT_URI_PRODUCT; // Your redirect uri
+var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
 
 const baseURlServer = "https://appnative-backend.onrender.com";
 const baseURLDev = "http://localhost:3004";

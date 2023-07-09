@@ -2,6 +2,21 @@ require("dotenv/config");
 const User = require("../api/User");
 const axios = require("axios").default;
 const urlBaseSpotify = "https://api.spotify.com/v1";
+const querystring = require("querystring");
+const request = require("request");
+
+const client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
+const client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
+const  redirect_uri = process.env.REDIRECT_URI_V2; // Your redirect uri
+
+const baseURlServer = "https://appnative-backend.onrender.com";
+const baseURLDev = "http://localhost:3004";
+const basURLDevAuth = "http://localhost:8887";
+const baseURLserverAuth = "https://appnative-backend-auth.onrender.com";
+
+
+var stateKey = "spotify_auth_state";
+
 
 class spotifyController extends User {
   //autenticação
@@ -255,6 +270,121 @@ class spotifyController extends User {
       console.log("playlist user");
     }
   }
-}
 
+  async login(req, res){
+    console.log("login");
+    let generateRandomString = function (length) {
+      let text = "";
+      let possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    
+      for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      return text;
+    };
+    const state = generateRandomString(16);
+    res.cookie(stateKey, state);
+  
+    // your application requests authorization
+    const scope =
+      "user-read-private user-read-email playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private ugc-image-upload";
+
+    res.redirect(
+      "https://accounts.spotify.com/authorize?" +
+        querystring.stringify({
+          response_type: "code",
+          client_id: client_id,
+          scope: scope,
+          redirect_uri: redirect_uri,
+          state: state,
+        })
+    );
+  }
+
+  
+  
+  async callback(req, res) {
+      console.log("callback");
+      const  code = req.query.code || null;
+      const state = req.query.state || null;
+      const storedState = req.cookies ? req.cookies[stateKey] : null;
+      
+  if (state === null || state !== storedState) {
+    res.redirect(
+      "/#" +
+        querystring.stringify({
+          error: "state_mismatch",
+        })
+    );
+  } else {
+    res.clearCookie(stateKey);
+    var authOptions = {
+      url: "https://accounts.spotify.com/api/token",
+      form: {
+        code: code,
+        redirect_uri: redirect_uri,
+        grant_type: "authorization_code",
+      },
+      headers: {
+        Authorization:
+          "Basic " +
+          Buffer.from(client_id + ":" + client_secret).toString("base64"),
+      },
+      json: true,
+    };
+
+
+
+    request.post(authOptions, function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        var access_token = body.access_token,
+          refresh_token = body.refresh_token;
+
+        var options = {
+          url: "https://api.spotify.com/v1/me",
+          headers: { Authorization: "Bearer " + access_token },
+          json: true,
+        };
+
+        // use the access token to access the Spotify Web API
+        request.get(options, function (error, response, body) {
+          console.log("body", body);
+          (async () => {
+            await axios.get(`${baseURLDev}/api/setdatauser`, {
+              headers: {
+                data: JSON.stringify(body),
+              },
+            }),
+              then((res) => res);
+
+            
+          })();
+        });
+
+        (async function () {
+         await axios
+            .get(`${baseURLDev}/api/token`, {
+              headers: {
+                 access_token: access_token,
+                 refresh_token: refresh_token,
+            },
+            })
+            .then((res) => res.data);
+        })();
+
+        res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
+      } else {
+        res.redirect(
+          "/#" +
+            querystring.stringify({
+              error: "invalid_token",
+            })
+        );
+      }
+    });
+  }
+      
+}
+}
 module.exports = spotifyController;

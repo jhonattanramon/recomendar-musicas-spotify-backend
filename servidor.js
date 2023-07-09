@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const path = require("path");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
+
 
 require("dotenv").config();
 
@@ -10,11 +12,10 @@ const app = express();
 const port = 3004;
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+app
+  .use(express.static(__dirname + "/public"))
+  .use(cors())
+  .use(cookieParser());
 
 // db connection
 

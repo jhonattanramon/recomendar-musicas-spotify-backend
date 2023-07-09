@@ -11,4 +11,6 @@ router
   .get((req, res) => spotifyController.authConfirmado(req, res));
   router.route("/inforsuser").get((req, res) => spotifyController.inforsUser(req, res));
 
+  router.route("/login").get( (req, res) => spotifyController.login(req, res))
+  router.route("/callback").get( (req, res) => spotifyController.callback(req, res))
   module.exports = router
