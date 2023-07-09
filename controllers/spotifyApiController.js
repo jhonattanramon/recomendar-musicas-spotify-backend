@@ -304,21 +304,19 @@ class spotifyController extends User {
   }
   async callback(req, res) {
     const testeCode = req.headers.code || null
-    
+
       const code = req.query.code || null;
       const state = req.query.state || null;
       const storedState = req.cookies ? req.cookies[stateKey] : null;
       
-  // if (state === null || state !== storedState) {
-  //   res.redirect(
-  //     "/#" +
-  //       querystring.stringify({
-  //         error: "state_mismatch",
-  //       })
-  //   );
-  // } else 
-  
-  if(testeCode !== null){
+   if (state === null || state !== storedState || testeCode !== null) {
+     res.redirect(
+       "/#" +
+         querystring.stringify({
+           error: "state_mismatch",
+         })
+     );
+  } else {
     res.clearCookie(stateKey);
     var authOptions = {
       url: "https://accounts.spotify.com/api/token",
