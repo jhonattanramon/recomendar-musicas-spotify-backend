@@ -289,9 +289,7 @@ class spotifyController extends User {
     // your application requests authorization
     const scope =
       "user-read-private user-read-email playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private ugc-image-upload";
-    window.postMessage("teste")
-    window.postMessage(JSON.stringify({ value: 'Hello from WebView!' }));
-
+    //window.postMessage("teste")
     res.redirect(
       "https://accounts.spotify.com/authorize?" +
         querystring.stringify({
@@ -372,7 +370,7 @@ class spotifyController extends User {
             })
             .then((res) => res.data);
         })();
-        window.ReactNativeWebView.postMessage(JSON.stringify({value: true}))
+      //  window.ReactNativeWebView.postMessage(JSON.stringify({value: true}))
         res.status(200).json({ state: true})
         //res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
       } else {
