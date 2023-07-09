@@ -367,7 +367,7 @@ class spotifyController extends User {
           })();
           res.status(200).json({ state: true})
         } else {
-          res.status(200).json({ state: false})
+          res.status(200).json({ state: false, error: error, statuscode: response.statusCode})
           // res.redirect(
           //   "/#" +
           //     querystring.stringify({
