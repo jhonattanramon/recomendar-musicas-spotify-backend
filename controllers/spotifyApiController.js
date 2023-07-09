@@ -7,7 +7,7 @@ const request = require("request");
 
 const client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 const client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
-const  redirect_uri = process.env.REDIRECT_URI_NEW_PRODUCT; // Your redirect uri
+const redirect_uri = process.env.REDIRECT_URI_NEW_PRODUCT; // Your redirect uri
 
 const baseURlServer = "https://appnative-backend.onrender.com";
 const baseURLDev = "http://localhost:3004";
