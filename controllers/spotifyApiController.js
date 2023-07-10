@@ -374,7 +374,8 @@ class spotifyController extends User {
       redirection(testeCode)
       return
     }else{
-      res.send("teste redirecionamento")
+     res.redirect(`https://appnative-backend.onrender.com/redirectLogin/index.html`)
+     res.send("teste redirecionamento")
     }
 
   //  if (state === null || state !== storedState ) {
