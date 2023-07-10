@@ -364,8 +364,7 @@ class spotifyController extends User {
           })();
           res.status(200).json({ state: true})
         } else {
-          res.sendFile(`/redirectLogin/index.html`)
-          //res.redirect(`https://appnative-backend.onrender.com/redirectLogin/index.html`)
+          res.send("redirecionamento")
         }
       });
     }
@@ -373,7 +372,7 @@ class spotifyController extends User {
     if( testeCode !== undefined){
       redirection(testeCode)
     }else{
-      res.render()
+      res.status(301).json({state: false, menssage:"algo deu errado ao realizar o login"})
     }
 }
 }
