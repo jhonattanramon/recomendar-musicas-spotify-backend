@@ -364,7 +364,7 @@ class spotifyController extends User {
           })();
           res.status(200).json({ state: true})
         } else {
-          res.sendFile(`https://appnative-backend.onrender.com/redirectLogin/index.html`)
+          res.sendFile(`/redirectLogin/index.html`)
           //res.redirect(`https://appnative-backend.onrender.com/redirectLogin/index.html`)
         }
       });
