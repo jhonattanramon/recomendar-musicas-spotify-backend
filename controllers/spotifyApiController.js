@@ -373,14 +373,16 @@ class spotifyController extends User {
     if( testeCode !== undefined){
       redirection(testeCode)
       return
+    }else{
+      res.send("teste redirecionamento")
     }
 
-   if (state === null || state !== storedState ) {
-      res.send("redirecionamento 2")
-     res.redirect(`https://appnative-backend.onrender.com/redirectLogin/index.html`)
-  } else {
-      redirection()
-   }
+  //  if (state === null || state !== storedState ) {
+  //     res.send("redirecionamento 2")
+  //    res.redirect(`https://appnative-backend.onrender.com/redirectLogin/index.html`)
+  // } else {
+  //     redirection()
+  //  }
       
 }
 }
