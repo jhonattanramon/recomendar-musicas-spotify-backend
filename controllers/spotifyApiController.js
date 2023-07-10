@@ -304,7 +304,6 @@ class spotifyController extends User {
   }
   async callback(req, res) {
     const testeCode = req.headers.code 
-
       const code = req.query.code || null;
       const state = req.query.state || null;
       const storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -315,7 +314,7 @@ class spotifyController extends User {
       var authOptions = {
         url: "https://accounts.spotify.com/api/token",
         form: {
-          code:testeCode || code,
+          code:testeCode,
           redirect_uri: redirect_uri,
           grant_type: "authorization_code",
         },
@@ -326,9 +325,7 @@ class spotifyController extends User {
         },
         json: true,
       };
-  
-  
-  
+
       request.post(authOptions, function (error, response, body) {
         if (!error && response.statusCode === 200) {
           var access_token = body.access_token,
