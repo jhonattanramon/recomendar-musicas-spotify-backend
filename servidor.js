@@ -13,7 +13,7 @@ const port = 3004;
 
 app.use(express.json());
 app
-  .use(express.static(__dirname + "./public"))
+  .use(express.static(__dirname + "/public"))
   .use(cors())
   .use(cookieParser());
 

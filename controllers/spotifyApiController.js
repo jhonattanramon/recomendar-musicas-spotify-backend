@@ -365,12 +365,6 @@ class spotifyController extends User {
           res.status(200).json({ state: true})
         } else {
           res.status(200).json({ state: false, error: error, statuscode: response.statusCode})
-          // res.redirect(
-          //   "/#" +
-          //     querystring.stringify({
-          //       error: "invalid_token",
-          //     })
-          // );
         }
       });
     }
@@ -381,10 +375,9 @@ class spotifyController extends User {
     }
 
    if (state === null || state !== storedState ) {
-     res.redirect(`https://appnative-backend.onrender.com/index.html`)
+     res.redirect(`https://appnative-backend.onrender.com/redirectLogin/index.html`)
   } else {
       redirection()
-
    }
       
 }
