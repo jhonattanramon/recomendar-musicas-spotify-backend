@@ -381,75 +381,10 @@ class spotifyController extends User {
     }
 
    if (state === null || state !== storedState ) {
-     res.status(200).json({ msg: "invalid state" })
+     res.redirect(`https://appnative-backend.onrender.com/index.html`)
   } else {
       redirection()
-  //   res.clearCookie(stateKey);
-  //   var authOptions = {
-  //     url: "https://accounts.spotify.com/api/token",
-  //     form: {
-  //       code: code,
-  //       redirect_uri: redirect_uri,
-  //       grant_type: "authorization_code",
-  //     },
-  //     headers: {
-  //       Authorization:
-  //         "Basic " +
-  //         Buffer.from(client_id + ":" + client_secret).toString("base64"),
-  //     },
-  //     json: true,
-  //   };
 
-
-
-  //   request.post(authOptions, function (error, response, body) {
-  //     if (!error && response.statusCode === 200) {
-  //       var access_token = body.access_token,
-  //         refresh_token = body.refresh_token;
-
-  //       var options = {
-  //         url: "https://api.spotify.com/v1/me",
-  //         headers: { Authorization: "Bearer " + access_token },
-  //         json: true,
-  //       };
-
-  //       // use the access token to access the Spotify Web API
-  //       request.get(options, function (error, response, body) {
-  //         console.log("body", body);
-  //         (async () => {
-  //           await axios.get(`${baseURlServer}/api/setdatauser`, {
-  //             headers: {
-  //               data: JSON.stringify(body),
-  //             },
-  //           }),
-  //             then((res) => res);
-
-            
-  //         })();
-  //       });
-
-  //       (async function () {
-  //        await axios
-  //           .get(`${baseURlServer}/api/token`, {
-  //             headers: {
-  //                access_token: access_token,
-  //                refresh_token: refresh_token,
-  //           },
-  //           })
-  //           .then((res) => res.data);
-  //       })();
-  //     //  window.ReactNativeWebView.postMessage(JSON.stringify({value: true}))
-  //       res.status(200).json({ state: true})
-  //       //res.redirect(`${baseURLserverAuth}/confirmAuth.html`);
-  //     } else {
-  //       res.redirect(
-  //         "/#" +
-  //           querystring.stringify({
-  //             error: "invalid_token",
-  //           })
-  //       );
-  //     }
-  //   });
    }
       
 }

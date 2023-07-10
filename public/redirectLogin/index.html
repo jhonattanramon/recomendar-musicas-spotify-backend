@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login em andamento...</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <link rel="stylesheet" href="./style.css" /> -->
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        flex: 1;
+        background-color: #030712;
+        color: #f9fafb;
+        font-family: "Roboto", sans-serif;
+        font-size: 1pc;
+      }
+      /* Estilos para a animação */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      #content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      #containerLoader {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 5px;
+      }
+
+      /* Estilos para o elemento que será animado */
+      #loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #22c55e;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div id="containerLoader">
+      <div id="content" >
+        <h1>Login em andamento...</h1>
+        <p>Aguarde um momento enquanto seu login está sendo processado...</p>
+        <div id="loader"></div>
+      </div>
+    </div>
+  </body>
+</html>
