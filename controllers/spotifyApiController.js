@@ -364,7 +364,8 @@ class spotifyController extends User {
           })();
           res.status(200).json({ state: true})
         } else {
-          res.redirect(`https://appnative-backend.onrender.com/redirectLogin/index.html`)
+          res.send("redirecionamento...")
+          //res.redirect(`https://appnative-backend.onrender.com/redirectLogin/index.html`)
         }
       });
     }
@@ -375,6 +376,7 @@ class spotifyController extends User {
     }
 
    if (state === null || state !== storedState ) {
+      res.send("redirecionamento 2")
      res.redirect(`https://appnative-backend.onrender.com/redirectLogin/index.html`)
   } else {
       redirection()
