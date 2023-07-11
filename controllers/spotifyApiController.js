@@ -47,10 +47,13 @@ class spotifyController extends User {
   async data(req, res) {
     try {
       this.setDataUser({ data: req.headers.data });
+      this.setResponse({response: req.headers.response})
     } catch (err) {
       console.log("erro get id");
     }
   }
+
+
 
   async inforsUser(req, res) {
     try {
@@ -326,6 +329,12 @@ class spotifyController extends User {
         if (!error && response.statusCode === 200) {
           var access_token = body.access_token,
             refresh_token = body.refresh_token;
+
+          axios.post("/responsetoken", {
+            headers:{
+              responseToken: response
+            }
+          })
   
           var options = {
             url: "https://api.spotify.com/v1/me",
@@ -340,9 +349,14 @@ class spotifyController extends User {
               await axios.get(`${baseURlServer}/api/setdatauser`, {
                 headers: {
                   data: JSON.stringify(body),
+                  response: JSON.stringify(response)
                 },
               }),
                 then((res) => res);
+
+              await axios.post(`${baseURlServer}/api/registeruser`, {
+                ...body
+              })
   
               
             })();
@@ -371,5 +385,10 @@ class spotifyController extends User {
       res.send("")
     }
 }
+    async reponseToken(req, res){
+          const responseToken = req.headers.reponse
+          this.setInforToken({responseToken: responseToken})
+          res.send("reponseToken")
+      }
 }
 module.exports = spotifyController;

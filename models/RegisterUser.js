@@ -4,12 +4,11 @@ const {Schema} = mongoose;
 
 const RegisterUserSchema = new Schema(
   {
-
-  name: {
+  country: {
     type: String,
     required: true
   },
-  surname: {
+  display_name: {
     type: String,
     required: true
   },
@@ -18,10 +17,44 @@ const RegisterUserSchema = new Schema(
     required: true,
     unique:true
   },
-  password: {
+  explicit_content: {
+    type: Object,
+    required: true
+  },
+  external_urls:{
+      type: Object,
+      required: true
+  },
+  followers:{
+    type: Object, 
+    required: true
+  },
+  href:{
     type: String,
     required: true
   },
+  id:{
+    type: String,
+    required: true,
+    unique:true
+  },
+  images:{
+    type: Array || Object,
+    required: true
+  },
+  product:{
+    type: String,
+    required: true,
+    
+  },
+  type:{
+    type: String,
+    required: true
+  },
+  uri:{
+    type: String,
+    required: true
+  }
  
 
 },
@@ -30,7 +63,7 @@ const RegisterUserSchema = new Schema(
 })
 
 
-const RegisterUser = mongoose.model("users", RegisterUserSchema)
+const RegisterUser = mongoose.model("Users", RegisterUserSchema)
 
 
 
