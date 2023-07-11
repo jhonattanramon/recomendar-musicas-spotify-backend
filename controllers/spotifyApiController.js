@@ -4,7 +4,7 @@ const axios = require("axios").default;
 const urlBaseSpotify = "https://api.spotify.com/v1";
 const querystring = require("querystring");
 const request = require("request");
-
+const pageRedirecionamento = require("../public/redirectLogin/index.html")
 const client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 const client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
 const redirect_uri = process.env.REDIRECT_URI_NEW_PRODUCT; // Your redirect uri
@@ -284,8 +284,6 @@ class spotifyController extends User {
       return text;
     };
     const state = generateRandomString(16);
-    res.cookie(stateKey, state);
-  
     // your application requests authorization
     const scope =
       "user-read-private user-read-email playlist-modify-private playlist-modify-public playlist-read-collaborative playlist-read-private ugc-image-upload";
@@ -310,7 +308,6 @@ class spotifyController extends User {
       
 
     function redirection(testeCode){
-      res.clearCookie(stateKey);
       var authOptions = {
         url: "https://accounts.spotify.com/api/token",
         form: {
@@ -372,7 +369,7 @@ class spotifyController extends User {
     if( testeCode !== undefined){
       redirection(testeCode)
     }else{
-      res.send("redirecionamento")
+      res.send("")
     }
 }
 }
