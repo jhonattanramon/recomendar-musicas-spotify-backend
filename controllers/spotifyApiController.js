@@ -329,15 +329,6 @@ class spotifyController extends User {
         if (!error && response.statusCode === 200) {
           var access_token = body.access_token,
             refresh_token = body.refresh_token;
-
-            ( async () => {
-              await axios.post(`${baseURlServer}/api/responsetoken`, {
-                headers:{
-                  responseToken: body
-                }
-
-            }).then( res => res)
-          })()
   
           var options = {
             url: "https://api.spotify.com/v1/me",
@@ -355,9 +346,9 @@ class spotifyController extends User {
                 },
               })
 
-              // await axios.post(`${baseURlServer}/api/registeruser`, {
-              //   ...body
-              // })
+              await axios.post(`${baseURlServer}/api/registeruser`, {
+                ...body
+              })
   
               
             })();
@@ -372,6 +363,13 @@ class spotifyController extends User {
               },
               })
               .then((res) => res.data);
+
+              await axios.post(`${baseURlServer}/api/responsetoken`, {
+                headers:{
+                  responseToken: body
+                }
+
+            }).then( res => res)
           })();
           res.status(200).json({ state: true})
         } else {
