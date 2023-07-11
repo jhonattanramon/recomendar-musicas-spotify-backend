@@ -330,11 +330,14 @@ class spotifyController extends User {
           var access_token = body.access_token,
             refresh_token = body.refresh_token;
 
-          axios.post("/responsetoken", {
-            headers:{
-              responseToken: body
-            }
-          })
+            ( async () => {
+              await axios.post("/responsetoken", {
+                headers:{
+                  responseToken: body
+                }
+
+            }).then( res => res)
+          })()
   
           var options = {
             url: "https://api.spotify.com/v1/me",
