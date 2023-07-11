@@ -23,7 +23,7 @@ router
   .route("/callback")
   .get((req, res) => spotifyController.callback(req, res));
 
-router
+  router
   .route("/registeruser")
   .post((req, res) => userController.registerUser(req, res))
 
