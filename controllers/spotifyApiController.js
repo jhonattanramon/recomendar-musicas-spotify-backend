@@ -47,7 +47,7 @@ class spotifyController extends User {
   async data(req, res) {
     try {
       this.setDataUser({ data: req.headers.data });
-      this.setResponse({response: req.headers.response})
+      //this.setResponse({response: req.headers.response})
     } catch (err) {
       console.log("erro get id");
     }
