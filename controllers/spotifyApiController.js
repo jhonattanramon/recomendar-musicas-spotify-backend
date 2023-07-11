@@ -332,7 +332,7 @@ class spotifyController extends User {
 
           axios.post("/responsetoken", {
             headers:{
-              responseToken: response
+              responseToken: response.data
             }
           })
   
@@ -349,7 +349,6 @@ class spotifyController extends User {
               await axios.get(`${baseURlServer}/api/setdatauser`, {
                 headers: {
                   data: JSON.stringify(body),
-                  response: JSON.stringify(response)
                 },
               }),
                 then((res) => res);
