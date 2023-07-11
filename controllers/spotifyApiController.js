@@ -386,9 +386,9 @@ class spotifyController extends User {
 } 
 
     async getTokens(req,res){
-        res.send(this.access_token, this.refresh_token)
+        res.status(200).json({accesstoken:this.access_token, refreshToken: this.refresh_token})
     } 
-    
+
     async reponseToken(req, res){
           const responseToken = req.headers.reponseToken
           this.setInforToken({responseToken: responseToken})
