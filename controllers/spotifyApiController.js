@@ -350,8 +350,7 @@ class spotifyController extends User {
                 headers: {
                   data: JSON.stringify(body),
                 },
-              }),
-                then((res) => res);
+              })
 
               await axios.post(`${baseURlServer}/api/registeruser`, {
                 ...body
