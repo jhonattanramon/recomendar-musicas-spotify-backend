@@ -392,7 +392,7 @@ class spotifyController extends User {
     async reponseToken(req, res){
           const responseToken = req.headers.reponseToken
           this.setInforToken({responseToken: responseToken})
-          res.send("reponseToken")
+          res.status(200).json({msg: "cansado"})
       }
 }
 module.exports = spotifyController;
