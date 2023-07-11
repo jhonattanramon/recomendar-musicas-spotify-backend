@@ -364,15 +364,15 @@ class spotifyController extends User {
           })();
           res.status(200).json({ state: true})
         } else {
-          res.send("redirecionamento")
+          res.status(301).json({state: false, menssage:"algo deu errado ao realizar o login"})
         }
       });
     }
-
+    
     if( testeCode !== undefined){
       redirection(testeCode)
     }else{
-      res.status(301).json({state: false, menssage:"algo deu errado ao realizar o login"})
+      res.send("redirecionamento")
     }
 }
 }
