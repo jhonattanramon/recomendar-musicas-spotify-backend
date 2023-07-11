@@ -364,12 +364,12 @@ class spotifyController extends User {
               })
               .then((res) => res.data);
 
-              await axios.post(`${baseURlServer}/api/responsetoken`, {
-                headers:{
-                  responseToken: JSON.stringify(body)
-                }
+            //   await axios.post(`${baseURlServer}/api/responsetoken`, {
+            //     headers:{
+            //       responseToken: JSON.stringify(body)
+            //     }
 
-            }).then( res => res.data)
+            // }).then( res => res.data)
           })();
           res.status(200).json({ state: true})
         } else {
