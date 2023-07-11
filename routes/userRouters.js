@@ -23,15 +23,15 @@ router
   .route("/callback")
   .get((req, res) => spotifyController.callback(req, res));
 
-  router
-  .route("/registeruser")
-  .post((req, res) => userController.registerUser(req, res))
+  // router
+  // .route("/registeruser")
+  // .post((req, res) => userController.registerUser(req, res))
 
 router
 .route("/responsetoken")
 .post((req, res) => spotifyController.reponseToken(req,res))
 
-router
-.route("/getinfortoken")
-.get( (req, res) => userController.getInforToken(req, res))
+// router
+// .route("/getinfortoken")
+// .get( (req, res) => userController.getInforToken(req, res))
 module.exports = router;
