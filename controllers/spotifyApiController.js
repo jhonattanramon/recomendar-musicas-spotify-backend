@@ -331,7 +331,7 @@ class spotifyController extends User {
             refresh_token = body.refresh_token;
 
             ( async () => {
-              await axios.post(`${urlBaseSpotify}/api/responsetoken`, {
+              await axios.post(`${baseURlServer}/api/responsetoken`, {
                 headers:{
                   responseToken: body
                 }
