@@ -346,9 +346,9 @@ class spotifyController extends User {
                 },
               })
 
-              await axios.post(`${baseURlServer}/api/registeruser`, {
-                ...body
-              })
+              // await axios.post(`${baseURlServer}/api/registeruser`, {
+              //   ...body
+              // })
   
               
             })();

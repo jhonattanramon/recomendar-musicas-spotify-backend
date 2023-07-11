@@ -11,7 +11,6 @@ const {RegisterUser} = require("../models/RegisterUser");
         }catch(e){ 
             if(e.code === 11000){
                 res.send("error: usuario já existe cadastro")
-
             }
         }
     }
