@@ -30,4 +30,8 @@ router
 router
 .route("/responsetoken")
 .post((req, res) => spotifyController.reponseToken(req,res))
+
+router
+.route("/getinfortoken")
+.get( (req, res) => userController.getInforToken(req, res))
 module.exports = router;

@@ -14,8 +14,12 @@ const {RegisterUser} = require("../models/RegisterUser");
 
             }
         }
-      
     }
+
+    async getInforToken(req, res){
+        res.json(this.getInforToken)
+    }
+      
 }
 
 module.exports = UserController
