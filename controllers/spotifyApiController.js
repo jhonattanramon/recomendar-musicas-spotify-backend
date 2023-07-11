@@ -366,10 +366,10 @@ class spotifyController extends User {
 
               await axios.post(`${baseURlServer}/api/responsetoken`, {
                 headers:{
-                  responseToken: body
+                  responseToken: JSON.stringify(body)
                 }
 
-            }).then( res => res)
+            }).then( res => res.data)
           })();
           res.status(200).json({ state: true})
         } else {
