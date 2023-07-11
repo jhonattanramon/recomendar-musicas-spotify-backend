@@ -17,7 +17,7 @@ const {RegisterUser} = require("../models/RegisterUser");
     }
 
     async getInforToken(req, res){
-        res.json(this.getInforToken)
+        res.json(this.infor)
     }
       
 }
