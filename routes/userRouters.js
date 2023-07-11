@@ -31,7 +31,9 @@ router
 .route("/responsetoken")
 .post((req, res) => spotifyController.reponseToken(req,res))
 
-router.route("/gettokens").get((req, res) => spotifyController.getTokens(req, res))
+router
+.route("/gettokens")
+.get((req, res) => spotifyController.getTokens(req, res))
 
 // router
 // .route("/getinfortoken")
