@@ -210,8 +210,9 @@ class spotifyController extends User {
 
   async pesquisa(req, res) {
     try {
+      const { data: namePlaylsit } = req.headers
       const { data } = await axios.get(
-        `${urlBaseSpotify}/search?q=remaster:genre=pagode&type=artist`,
+        `${urlBaseSpotify}/search?q=remaster:${namePlaylsit}type=artist`,
         {
           headers: {
             Authorization: `Bearer ${this.access_token}`,
