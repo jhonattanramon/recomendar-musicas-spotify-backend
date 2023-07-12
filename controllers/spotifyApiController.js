@@ -221,7 +221,7 @@ class spotifyController extends User {
       );
       res.status(200).json(data);
     } catch (err) {
-      console.log("err pesquisa");
+      res.status(301).json({msg: "erro na pesquisa"})
     }
   }
 
