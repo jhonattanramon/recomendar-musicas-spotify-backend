@@ -2,23 +2,25 @@ class User {
   constructor() {
     this.access_token = null,
     this.refresh_token = null,
+    this.token_type = null,
+    this.expires_in = null,
+    this.scope = null,
     this.dataUser = null,
-    this.response = null,
     this.infor = null
   }
-
-  setInforToken({responseToken}){
-    this.infor = responseToken
+  setInforToken(data){
+    this.infor = JSON.parse(data)
   }
-
-  setToken({ access_token, refresh_token }) {
+  setToken({access_token, refresh_token, token_type, expires_in, scope}) {
     this.access_token = access_token;
     this.refresh_token = refresh_token;
+    this.token_type = token_type;
+    this.expires_in = expires_in;
+    this.scope = scope;
   }
-  setDataUser({  data }) {
+  setData({data}) {
     this.dataUser = JSON.parse(data);
   }
-
   logout() {
     (this.access_token = null), (this.refresh_token = null), (this.id = null);
   }

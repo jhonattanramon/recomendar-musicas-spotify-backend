@@ -10,8 +10,6 @@ const redirect_uri = process.env.REDIRECT_URI_NEW_PRODUCT; // Your redirect uri
 
 const baseURlServer = "https://appnative-backend.onrender.com";
 const baseURLDev = "http://localhost:3004";
-const basURLDevAuth = "http://localhost:8887";
-const baseURLserverAuth = "https://appnative-backend-auth.onrender.com";
 
 
 var stateKey = "spotify_auth_state";
@@ -34,29 +32,29 @@ class spotifyController extends User {
   }
 
   async token(req, res) {
-    try {
-      this.setToken({
-        access_token: req.headers.access_token,
-        refresh_token: req.headers.refresh_token,
-      });
+    try { 
+      const bodytoken= JSON.parse(req.headers.bodytoken)
+      this.setToken(bodytoken);
+      res.send("tokens setting")
     } catch (err) {
       console.log("error token");
     }
   }
 
-  async data(req, res) {
-    try {
-      this.setDataUser({ data: req.headers.data });
-      //this.setResponse({response: req.headers.response})
-    } catch (err) {
-      console.log("erro get id");
-    }
-  }
+  // async setDataUser(req, res) {
+  //   try {
+  //     this.setData({ data: req.headers.data });
+  //     res.status(200).json({msg: "data setting"})
+  //   } catch (err) {
+  //     console.log("erro get id");
+  //   }
+  // }
 
 
 
   async inforsUser(req, res) {
     try {
+    console.log(this.dataUser);
       const {data: inforsUser} = await axios
         .get(`${urlBaseSpotify}/me`, {
           headers: {
@@ -99,6 +97,7 @@ class spotifyController extends User {
 
   async playlistsEmDestaque(req, res) {
     try {
+      console.log(this.access_token);
       const destaquesPlaylists = await axios
         .get(
           `${urlBaseSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`,
@@ -109,9 +108,10 @@ class spotifyController extends User {
           }
         )
         .then((res) => res.data);
+        console.log(destaquesPlaylists);
       res.status(200).json(destaquesPlaylists);
     } catch (err) {
-      res.status(301).json(err);
+      res.status(200).json(err);
       console.log("criarPlaylist");
     }
   }
@@ -302,6 +302,8 @@ class spotifyController extends User {
     );
 
   }
+
+
   async callback(req, res) {
       const testeCode = req.headers.code 
       const code = req.query.code || null;
@@ -309,11 +311,11 @@ class spotifyController extends User {
       const storedState = req.cookies ? req.cookies[stateKey] : null;
       
 
-    function redirection(testeCode){
+    function redirection(){
       var authOptions = {
         url: "https://accounts.spotify.com/api/token",
         form: {
-          code:testeCode,
+          code: testeCode || code,
           redirect_uri: redirect_uri,
           grant_type: "authorization_code",
         },
@@ -338,17 +340,16 @@ class spotifyController extends User {
   
           // use the access token to access the Spotify Web API
           request.get(options, function (error, response, body) {
-            console.log("body", body);
             (async () => {
               await axios.get(`${baseURlServer}/api/setdatauser`, {
                 headers: {
                   data: JSON.stringify(body),
                 },
-              })
+              }).then( res => res).catch( (err) => err )
 
-              // await axios.post(`${baseURlServer}/api/registeruser`, {
-              //   ...body
-              // })
+              await axios.post(`${baseURlServer}/api/registeruser`, {
+                ...body
+              }).then( res => res)
   
               
             })();
@@ -358,18 +359,11 @@ class spotifyController extends User {
            await axios
               .get(`${baseURlServer}/api/token`, {
                 headers: {
-                   access_token: access_token,
-                   refresh_token: refresh_token,
+                   bodyToken: JSON.stringify(body)
               },
               })
-              .then((res) => res.data);
-
-            //   await axios.post(`${baseURlServer}/api/responsetoken`, {
-            //     headers:{
-            //       responseToken: JSON.stringify(body)
-            //     }
-
-            // }).then( res => res.data)
+              .then((res) => res);
+            
           })();
           res.status(200).json({ state: true})
         } else {
@@ -381,18 +375,12 @@ class spotifyController extends User {
     if( testeCode !== undefined){
       redirection(testeCode)
     }else{
-      res.send("")
+      redirection()
     }
-} 
-
-    async getTokens(req,res){
-        res.status(200).json({accesstoken:this.access_token, refreshToken: this.refresh_token})
-    } 
-
-    async reponseToken(req, res){
-          const responseToken = req.headers.reponseToken
-          this.setInforToken({responseToken: responseToken})
-          res.status(200).json({msg: "cansadog"})
-      }
+  }     
+    async getInforToken(req, res){
+      console.log("getToken");
+      res.status(200).json(this.infor)
+  }
 }
 module.exports = spotifyController;

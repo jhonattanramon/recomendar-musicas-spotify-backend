@@ -1,11 +1,11 @@
 const router = require("express").Router();
-const spotifyController = require("./controll")
+const {spotifyController} = require("./controll")
 router
   .route("/playlist")
   .get((req, res) => spotifyController.playlist(req, res));
 
 router
-  .route("/playlistsemdestaque")
+  .route("/destaque")
   .get((req, res) => spotifyController.playlistsEmDestaque(req, res));
 
 router

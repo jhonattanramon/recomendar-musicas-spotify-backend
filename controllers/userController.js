@@ -15,9 +15,16 @@ const {RegisterUser} = require("../models/RegisterUser");
         }
     }
 
-    async getInforToken(req, res){
-        res.json(this.infor)
-    }
+    async setDataUser(req, res) {
+        try {
+          this.setData({ data: req.headers.data });
+          res.status(200).json({msg: "data setting"})
+        } catch (err) {
+          console.log("erro get id");
+        }
+      }
+    
+
       
 }
 

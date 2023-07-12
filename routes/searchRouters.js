@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const spotifyController = require("./controll")
+const {spotifyController} = require("./controll")
 
 router
   .route("/pesquisa")
