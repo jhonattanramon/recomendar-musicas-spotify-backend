@@ -375,7 +375,7 @@ class spotifyController extends User {
     if( testeCode !== undefined){
       redirection(testeCode)
     }else{
-      redirection()
+      res.send("")
     }
   }     
     async getInforToken(req, res){
