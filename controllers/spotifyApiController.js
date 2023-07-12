@@ -111,7 +111,7 @@ class spotifyController extends User {
         .then((res) => res.data);
       res.status(200).json(destaquesPlaylists);
     } catch (err) {
-      res.status(500).json(err);
+      res.status(301).json(err);
       console.log("criarPlaylist");
     }
   }
@@ -303,7 +303,7 @@ class spotifyController extends User {
 
   }
   async callback(req, res) {
-    const testeCode = req.headers.code 
+      const testeCode = req.headers.code 
       const code = req.query.code || null;
       const state = req.query.state || null;
       const storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -354,7 +354,7 @@ class spotifyController extends User {
             })();
           });
   
-          (async function () {
+          (async  () =>  {
            await axios
               .get(`${baseURlServer}/api/token`, {
                 headers: {
@@ -392,7 +392,7 @@ class spotifyController extends User {
     async reponseToken(req, res){
           const responseToken = req.headers.reponseToken
           this.setInforToken({responseToken: responseToken})
-          res.status(200).json({msg: "cansado"})
+          res.status(200).json({msg: "cansadog"})
       }
 }
 module.exports = spotifyController;
