@@ -211,6 +211,7 @@ class spotifyController extends User {
   async pesquisa(req, res) {
     try {
       const { data: namePlaylsit } = req.headers
+      console.log(namePlaylsit);
       const { data } = await axios.get(
         `${urlBaseSpotify}/search?q=remaster:${namePlaylsit}type=artist`,
         {
@@ -219,6 +220,7 @@ class spotifyController extends User {
           },
         }
       );
+      console.log(data);
       res.status(200).json(data);
     } catch (err) {
       res.status(301).json({msg: "erro na pesquisa"})
