@@ -1,16 +1,15 @@
 require("dotenv/config");
 const User = require("../api/User");
 const axios = require("axios").default;
-const urlBaseSpotify = "https://api.spotify.com/v1";
 const querystring = require("querystring");
 const request = require("request");
 const client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 const client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
 const redirect_uri = process.env.REDIRECT_LAN; // Your redirect uri
 
-const baseURlServer = "https://appnative-backend.onrender.com";
-const baseURLDev = "http://localhost:3004";
-const baseLanDev = "http://192.168.0.25:3004"
+const URlServer = "https://appnative-backend.onrender.com";
+const URLDev = "http://192.168.0.25:3004"
+const urlSpotify = "https://api.spotify.com/v1";
 
 
 var stateKey = "spotify_auth_state";
@@ -57,7 +56,7 @@ class spotifyController extends User {
     try {
     console.log(this.dataUser);
       const {data: inforsUser} = await axios
-        .get(`${urlBaseSpotify}/me`, {
+        .get(`${urlSpotify}/me`, {
           headers: {
             Authorization: `Bearer ${this.access_token}`,
           },
@@ -74,7 +73,7 @@ class spotifyController extends User {
   async createPlaylist(req, res) {
     try {
       const { name, publicList, collaborative, description } = req.body 
-      const {data: playlist} = await axios.post(`${urlBaseSpotify}/users/${this.dataUser.id}/playlists`,
+      const {data: playlist} = await axios.post(`${urlSpotify}/users/${this.dataUser.id}/playlists`,
           {
             name: name,
             public: publicList,
@@ -101,7 +100,7 @@ class spotifyController extends User {
       console.log(this.access_token);
       const destaquesPlaylists = await axios
         .get(
-          `${urlBaseSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`,
+          `${urlSpotify}/browse/featured-playlists?coutry=BR&timestamp=2023-01-01T09%3A00%3A00&limit=20`,
           {
             headers: {
               Authorization: `Bearer ${this.access_token}`,
@@ -119,7 +118,7 @@ class spotifyController extends User {
   async playlist(req, res) {
     try {
       const playlist = await axios
-        .get(`${urlBaseSpotify}/playlists/${req.headers.playlist_ID}`, {
+        .get(`${urlSpotify}/playlists/${req.headers.playlist_ID}`, {
           headers: {
             Authorization: `Bearer ${this.access_token}`,
           },
@@ -136,7 +135,7 @@ class spotifyController extends User {
       const { id, item } = req.body.data;
       const res = await axios
         .post(
-          `${urlBaseSpotify}/playlists/${id}/tracks`,
+          `${urlSpotify}/playlists/${id}/tracks`,
           {
             uris: [item.uri],
             position: 0,
@@ -165,7 +164,7 @@ class spotifyController extends User {
   async obterGeneros(req, res) {
     try {
       const generos = await axios
-        .get(`${urlBaseSpotify}/recommendations/available-genre-seeds`, {
+        .get(`${urlSpotify}/recommendations/available-genre-seeds`, {
           headers: {
             Authorization: `Bearer ${this.access_token}`,
           },
@@ -214,7 +213,7 @@ class spotifyController extends User {
       const { data: namePlaylsit } = req.headers
       console.log(namePlaylsit);
       const { data } = await axios.get(
-        `${urlBaseSpotify}/search?q=${namePlaylsit}&type=playlist&offset=500`,
+        `${urlSpotify}/search?q=${namePlaylsit}&type=playlist&offset=500`,
         {
           headers: {
             Authorization: `Bearer ${this.access_token}`,
@@ -231,7 +230,7 @@ class spotifyController extends User {
   async pesquisaTrack(req, res) {
     try {
       const result = await axios
-        .get(`${urlBaseSpotify}/search?q=${req.headers.nameTrack}&type=track`, {
+        .get(`${urlSpotify}/search?q=${req.headers.nameTrack}&type=track`, {
           headers: {
             Authorization: `Bearer ${this.access_token}`,
           },
@@ -247,7 +246,7 @@ class spotifyController extends User {
     try {
       const { data } = await axios
         .get(
-          `${urlBaseSpotify}/search?q=remaster=genre:${req.body.genre}&type=${req.body.type}&limit=50`,
+          `${urlSpotify}/search?q=remaster=genre:${req.body.genre}&type=${req.body.type}&limit=50`,
           {
             headers: {
               Authorization: `Bearer ${this.access_token}`,
@@ -264,7 +263,7 @@ class spotifyController extends User {
   async playlistUser(req, res) {
     try {
       const { data } = await axios
-        .get(`${urlBaseSpotify}/me/playlists?limit=50`, {
+        .get(`${urlSpotify}/me/playlists?limit=50`, {
           headers: {
             Authorization: `Bearer ${this.access_token}`,
           },
@@ -345,13 +344,13 @@ class spotifyController extends User {
           // use the access token to access the Spotify Web API
           request.get(options, function (error, response, body) {
             (async () => {
-              await axios.get(`${baseLanDev}/api/setdatauser`, {
+              await axios.get(`${URLDev}/api/setdatauser`, {
                 headers: {
                   data: JSON.stringify(body),
                 },
               }).then( res => res).catch( (err) => err )
 
-              await axios.post(`${baseLanDev}/api/registeruser`, {
+              await axios.post(`${URLDev}/api/registeruser`, {
                 ...body
               }).then( res => res)
   
@@ -361,7 +360,7 @@ class spotifyController extends User {
   
           (async  () =>  {
            await axios
-              .get(`${baseLanDev}/api/token`, {
+              .get(`${URLDev}/api/token`, {
                 headers: {
                    bodyToken: JSON.stringify(body)
               },
