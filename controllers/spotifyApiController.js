@@ -6,10 +6,11 @@ const querystring = require("querystring");
 const request = require("request");
 const client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 const client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
-const redirect_uri = process.env.REDIRECT_URI_NEW_PRODUCT; // Your redirect uri
+const redirect_uri = process.env.REDIRECT_LAN; // Your redirect uri
 
 const baseURlServer = "https://appnative-backend.onrender.com";
 const baseURLDev = "http://localhost:3004";
+const baseLanDev = "http://192.168.0.25:3004"
 
 
 var stateKey = "spotify_auth_state";
@@ -213,7 +214,7 @@ class spotifyController extends User {
       const { data: namePlaylsit } = req.headers
       console.log(namePlaylsit);
       const { data } = await axios.get(
-        `${urlBaseSpotify}/search?q=remaster:${namePlaylsit}&type=playlist`,
+        `${urlBaseSpotify}/search?q=${namePlaylsit}&type=playlist&offset=500`,
         {
           headers: {
             Authorization: `Bearer ${this.access_token}`,
@@ -344,13 +345,13 @@ class spotifyController extends User {
           // use the access token to access the Spotify Web API
           request.get(options, function (error, response, body) {
             (async () => {
-              await axios.get(`${baseURlServer}/api/setdatauser`, {
+              await axios.get(`${baseLanDev}/api/setdatauser`, {
                 headers: {
                   data: JSON.stringify(body),
                 },
               }).then( res => res).catch( (err) => err )
 
-              await axios.post(`${baseURlServer}/api/registeruser`, {
+              await axios.post(`${baseLanDev}/api/registeruser`, {
                 ...body
               }).then( res => res)
   
@@ -360,7 +361,7 @@ class spotifyController extends User {
   
           (async  () =>  {
            await axios
-              .get(`${baseURlServer}/api/token`, {
+              .get(`${baseLanDev}/api/token`, {
                 headers: {
                    bodyToken: JSON.stringify(body)
               },
@@ -378,6 +379,7 @@ class spotifyController extends User {
     if( testeCode !== undefined){
       redirection(testeCode)
     }else{
+
       res.send("")
     }
   }     
