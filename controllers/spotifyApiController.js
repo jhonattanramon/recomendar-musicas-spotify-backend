@@ -5,7 +5,7 @@ const querystring = require("querystring");
 const request = require("request");
 const client_id = process.env.CLIENT_ID_SPOTIFY; // Your client id
 const client_secret = process.env.CLIENT_SECRECT_SPOTIFY; // Your secret
-const redirect_uri = process.env.REDIRECT_LAN; // Your redirect uri
+const redirect_uri = process.env.REDIRECT_DEV; // Your redirect uri
 
 const URlServer = "https://appnative-backend.onrender.com";
 const URLDev = "http://192.168.0.25:3004"
@@ -313,12 +313,11 @@ class spotifyController extends User {
       const state = req.query.state || null;
       const storedState = req.cookies ? req.cookies[stateKey] : null;
       
-
     function redirection(){
       var authOptions = {
         url: "https://accounts.spotify.com/api/token",
         form: {
-          code: testeCode || code,
+          code: testeCode,
           redirect_uri: redirect_uri,
           grant_type: "authorization_code",
         },
@@ -368,20 +367,49 @@ class spotifyController extends User {
               .then((res) => res);
             
           })();
-          res.status(200).json({ state: true})
+          res.status(200).json({ dataToken: { ...body, state: true}})
         } else {
           res.status(301).json({state: false, menssage:"algo deu errado ao realizar o login"})
         }
       });
     }
+
     
     if( testeCode !== undefined){
       redirection(testeCode)
     }else{
-
       res.send("")
     }
   }     
+
+  
+  async refreshToken(req, res){
+    const refresh_token = req.body.refresh_token;
+    const authOptions = {
+      url: "https://accounts.spotify.com/api/token",
+      headers: {
+        Authorization:
+          "Basic " +
+          Buffer.from(client_id + ":" + client_secret).toString("base64"),
+      },
+      form: {
+        grant_type: "refresh_token",
+        refresh_token: refresh_token,
+      },
+      json: true,
+    };
+  
+    request.post(authOptions, function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        const access_token = body.access_token;
+        console.log(body);
+        res.json({
+          access_token: access_token,
+        });
+      }
+    });
+  }
+  
     async getInforToken(req, res){
       console.log("getToken");
       res.status(200).json(this.infor)

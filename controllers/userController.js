@@ -23,7 +23,24 @@ const {RegisterUser} = require("../models/RegisterUser");
           console.log("erro get id");
         }
       }
+
+      async setLogout(req, res){
+        try{
+          const { stateLogout } = this.logout()
+          console.log(stateLogout);
+          res.json({stateLogout: stateLogout})
+        }catch(e){
+          res.json({stateLogout: false})
+        }
+      }
     
+      async stateAuth(req, res){
+        try{
+          
+        }catch(e){
+
+        }
+      }
 
       
 }

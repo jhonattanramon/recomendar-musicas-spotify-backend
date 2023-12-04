@@ -23,6 +23,10 @@ router
   .route("/callback")
   .get((req, res) => spotifyController.callback(req, res));
 
+router
+  .route("/refreshtoken")
+  .post((req, res) => spotifyController.refreshToken(req, res))
+
   router
   .route("/registeruser")
   .post((req, res) => userController.registerUser(req, res))
@@ -30,4 +34,13 @@ router
 router
 .route("/getinfortoken")
 .get( (req, res) => spotifyController.getInforToken(req, res))
+
+router
+.route("/logout")
+.get( (req, res) => userController.setLogout(req, res))
+
+router
+.route("/stateAuth")
+.get( (req, res) => userController.stateAuth(req, res))
+
 module.exports = router;

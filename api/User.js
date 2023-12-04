@@ -23,6 +23,7 @@ class User {
   }
   logout() {
     (this.access_token = null), (this.refresh_token = null), (this.id = null);
+    return { stateLogout: true };
   }
 }
 
